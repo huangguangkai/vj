@@ -6,6 +6,6 @@ module.exports = function ( router ) {
 
 function* index() {
   yield this.render('home/index', {
-    title: 'test'
+    title: 'VJ'
   });
 }

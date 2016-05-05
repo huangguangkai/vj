@@ -21,7 +21,7 @@
         .textShadow;
         background-color: rgba(0,0,0,0);
         transition: background-color 0.3s;
-        &:hover{
+        &.active, &:hover{
           background-color: rgba(0,0,0,0.1);
         }
       }
@@ -31,11 +31,12 @@
         position: absolute;
         top: 43px;
         left: -20px;
+        z-index: 99;
         padding: 10px 0;
         width: 100px;
         border-radius: 5px;
         background-color: #333;
-        z-index: 99;
+        .textShadow;
         &:before{
           content: "";
           position: absolute;

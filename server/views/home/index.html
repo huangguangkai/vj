@@ -13,6 +13,7 @@
   <title>{{title}}</title>
 
   <link rel="stylesheet" href="{{staticPrefix}}/libs/normalize.css/normalize-3.0.3.min.css">
+  <link rel="stylesheet" href="{{staticPrefix}}/libs/swiper/css/swiper.min.css">
   {{styleHelper.render('/home/index')}}
 
   {%block head%}{%endblock%}
@@ -46,6 +47,8 @@
         baseUrl: '{{jsPrefix}}',
         paths: {
           jquery: '{{staticPrefix}}/libs/jquery/jquery-2.1.4.min',
+          swiper: '{{staticPrefix}}/libs/swiper/js/swiper.jquery.umd.min',
+          lazyload: '{{staticPrefix}}/libs/jquery.lazyload/jquery.lazyload-1.9.7.min',
         }
       });
     }());
@@ -98,9 +101,29 @@
     </div>
   </div>
 
-  <div class="banners" style="background-color: #000;">test</div>
-
-  <div class="list"></div>
+  <div class="banner">
+    <div id="J_Swiper" class="swiper-container">
+      <div class="swiper-wrapper">
+          <div class="swiper-slide">
+          <div
+          class="swiper-lazy"
+          data-background="{{staticPrefix}}/img/demo/pic.jpg"></div>
+          </div>
+          <div class="swiper-slide">
+          <div
+          class="swiper-lazy"
+          data-background="{{staticPrefix}}/img/demo/pic-2.jpg"></div>
+          </div>
+          <div class="swiper-slide">
+          <div
+          class="swiper-lazy"
+          data-background="{{staticPrefix}}/img/demo/pic.jpg"></div>
+          </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination"></div>
+  </div>
+  </div>
 
   <div class="contact"></div>
 
