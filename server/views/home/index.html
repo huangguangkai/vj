@@ -1,1 +1,115 @@
-test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <meta name="keywords" content="VJ">
+  <meta name="description" content="VJ">
+  <title>{{title}}</title>
+
+  <link rel="stylesheet" href="{{staticPrefix}}/libs/normalize.css/normalize-3.0.3.min.css">
+  {{styleHelper.render('/home/index')}}
+
+  {%block head%}{%endblock%}
+
+  {%if isDev%}
+  <!--开发环境加载less-->
+  <script>
+    less = {
+      env: "development",
+      async: false,
+      fileAsync: false,
+      poll: 1000,
+      functions: {},
+      dumpLineNumbers: "comments",
+      relativeUrls: false,
+      rootpath: "http://localhost:3050/",
+    };
+  </script>
+  <script src="{{staticPrefix}}/libs/less/less-2.5.3.min.js"></script>
+  <script>
+  less.modifyVars({
+    staticPrefix: ''
+  })
+  </script>
+  {%endif%}
+
+  <script src="{{staticPrefix}}/libs/requirejs/require-2.2.0.min.js"></script>
+  <script>
+    (function(){
+      requirejs.config({
+        baseUrl: '{{jsPrefix}}',
+        paths: {
+          jquery: '{{staticPrefix}}/libs/jquery/jquery-2.1.4.min',
+        }
+      });
+    }());
+  </script>
+</head>
+<body>
+  <div class="header">
+    <div class="container">
+      <h1 class="logo"><a class="bd" href="/">vincentjam</a></h1>
+      <div class="menus">
+        <div class="menu-li">
+          <a class="bd" href="/">首页</a>
+        </div>
+        <div class="J_HasSubMenu menu-li">
+          <a class="bd" href="javascript:;">婚礼</a>
+          <div class="J_SubMenu sub-menu">
+            <ul>
+              <li class="sub-menu-li">
+                <a class="sub-bd" href="#">照片</a>
+              </li>
+              <li class="sub-menu-li">
+                <a class="sub-bd" href="#">视频</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="menu-li">
+          <a class="bd" href="#">婚纱</a>
+        </div>
+        <div class="J_HasSubMenu menu-li">
+          <a class="bd" href="javascript:;">写真</a>
+          <div class="J_SubMenu sub-menu">
+            <ul>
+              <li class="sub-menu-li">
+                <a class="sub-bd" href="#">个人</a>
+              </li>
+              <li class="sub-menu-li">
+                <a class="sub-bd" href="#">孕妇</a>
+              </li>
+              <li class="sub-menu-li">
+                <a class="sub-bd" href="#">儿童</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="menu-li">
+          <a class="bd" href="#">关于我们</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="banners" style="background-color: #000;">test</div>
+
+  <div class="list"></div>
+
+  <div class="contact"></div>
+
+  <div class="footer"></div>
+
+  <script>
+  require(['home/app'], function (app) {
+    app.init();
+  });
+  </script>
+</body>
+</html>
