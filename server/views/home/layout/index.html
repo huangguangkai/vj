@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <meta name="keywords" content="VJ">
+  <meta name="description" content="VJ">
+  <title>{{title}}</title>
+
+  <link rel="stylesheet" href="{{staticPrefix}}/libs/normalize.css/normalize-3.0.3.min.css">
+  <link rel="stylesheet" href="{{staticPrefix}}/libs/swiper/css/swiper.min.css">
+  {{styleHelper.render('/home/index')}}
+
+  {%block head%}{%endblock%}
+
+  {%if isDev%}
+  <!--开发环境加载less-->
+  <script>
+    less = {
+      env: "development",
+      async: false,
+      fileAsync: false,
+      poll: 1000,
+      functions: {},
+      dumpLineNumbers: "comments",
+      relativeUrls: false,
+      rootpath: "http://localhost:3050/",
+    };
+  </script>
+  <script src="{{staticPrefix}}/libs/less/less-2.5.3.min.js"></script>
+  <script>
+  less.modifyVars({
+    staticPrefix: ''
+  })
+  </script>
+  {%endif%}
+
+  <script src="{{staticPrefix}}/libs/requirejs/require-2.2.0.min.js"></script>
+  <script>
+    (function(){
+      requirejs.config({
+        baseUrl: '{{jsPrefix}}',
+        paths: {
+          jquery: '{{staticPrefix}}/libs/jquery/jquery-2.1.4.min',
+          swiper: '{{staticPrefix}}/libs/swiper/js/swiper.jquery.umd.min',
+          lazyload: '{{staticPrefix}}/libs/jquery.lazyload/jquery.lazyload-1.9.7.min',
+        }
+      });
+    }());
+  </script>
+</head>
+<body>
+
+  {%include './header.html'%}
+
+  {%block content%}{%endblock%}
+
+  {%include './footer.html'%}
+
+  {%block foot%}{%endblock%}
+
+  <script>
+  require(['home/app'], function (app) {
+    app.init();
+  });
+  </script>
+</body>
+</html>

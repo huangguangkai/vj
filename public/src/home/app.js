@@ -5,7 +5,8 @@ define([
   'swiper',
   'lazyload',
   'home/components/menus',
-  ], function ($, Swiper, lazyload, menus) {
+  'home/components/contact',
+  ], function ($, Swiper, lazyload, menus, contact) {
 
   var app = {
 
@@ -13,6 +14,7 @@ define([
 
   app.init = function appInit () {
     menus.init();
+    contact.init();
 
     $('.J_Lazy').lazyload({
       effect : 'fadeIn',
@@ -21,12 +23,13 @@ define([
     this.swiper = new Swiper('#J_Swiper', {
       direction: 'horizontal',
       loop: true,
-      autoplay: 300000,
+      autoplay: 3000,
       speed: 1000,
       pagination : '.swiper-pagination',
       paginationClickable: true,
       lazyLoading: true,
-      lazyLoadingOnTransitionStart: true
+      lazyLoadingOnTransitionStart: true,
+      autoplayDisableOnInteraction: false
     });
   };
 
