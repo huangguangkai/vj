@@ -4,7 +4,7 @@ const customDataTypes = require('../../libs/sequelize-mysql-timestamp');
 
 module.exports = function ( sequelize, DataTypes ) {
 
-  const Video = sequelize.define('Video', {
+  const HomeRecommend = sequelize.define('HomeRecommend', {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
       primaryKey: true,
@@ -24,23 +24,11 @@ module.exports = function ( sequelize, DataTypes ) {
       defaultValue: '',
       comment: '标题图'
     },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: '',
-      comment: '详情'
-    },
     cover_url: {
       type: DataTypes.STRING(500),
       allowNull: false,
       defaultValue: '',
       comment: '封面图片地址'
-    },
-    video_url: {
-      type: DataTypes.STRING(500),
-      allowNull: false,
-      defaultValue: '',
-      comment: '视频地址'
     },
     created_at: {
       type: customDataTypes.TIMESTAMP,
@@ -53,8 +41,8 @@ module.exports = function ( sequelize, DataTypes ) {
       comment: '更新时间'
     }
   }, {
-    tableName: 'videos',
-    comment: '视频表',
+    tableName: 'home_recommends',
+    comment: '首页推荐表',
     timestamps: false,
     underscored: true,
 
@@ -65,5 +53,5 @@ module.exports = function ( sequelize, DataTypes ) {
     }
   });
 
-  return Video;
+  return HomeRecommend;
 };

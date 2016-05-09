@@ -1,0 +1,31 @@
+
+{%extends './layout/index.html'%}
+
+{%block content%}
+{%include './components/video.html'%}
+
+<div style="height: 50px;"></div>
+
+{%include './components/photo.html'%}
+
+<div style="height: 50px;"></div>
+
+{%include './components/cover.html'%}
+
+{%endblock%}
+
+{%block foot%}
+<script>
+APP.photos = [
+  {
+    cover_url: ''
+  },
+  {
+
+  },
+  {},
+  {},
+  {},
+];
+</script>
+{%endblock%}

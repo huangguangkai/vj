@@ -30,6 +30,12 @@ module.exports = function ( sequelize, DataTypes ) {
       charset: 'utf8mb4',
       comment: '套餐名'
     },
+    name_image: {
+      type: DataTypes.STRING(500),
+      allowNull: false,
+      defaultValue: '',
+      comment: '套餐名图'
+    },
     description: {
       type: DataTypes.STRING,
       allowNull: false,

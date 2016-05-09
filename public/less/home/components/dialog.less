@@ -1,0 +1,42 @@
+
+.ui-dialog{
+  background-color: #fff;
+  .bd{
+    padding: 20px;
+    .pic{
+      max-width: 800px;
+      max-height: 600px;
+    }
+  }
+  .loading{
+    margin: 100px;
+  }
+  .ft{
+    padding: 0 20px 20px;
+    .clearfix;
+    .prev, .next, .close{
+      width: 25px;
+      height: 25px;
+      overflow: hidden;
+      text-indent: -999px;
+      cursor: pointer;
+      background: url("@{staticPrefix}/img/btn-dialog.png") no-repeat;
+      &.disabled{
+        opacity: 0.25;
+      }
+    }
+    .prev{
+      .fl;
+      margin-right: 10px;
+      background-position: 0 0;
+    }
+    .next{
+      .fl;
+      background-position: -25px 0;
+    }
+    .close{
+      .fr;
+      background-position: -50px 0;
+    }
+  }
+}

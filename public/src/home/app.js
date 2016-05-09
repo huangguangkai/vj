@@ -4,17 +4,27 @@ define([
   'jquery',
   'swiper',
   'lazyload',
-  'home/components/menus',
-  'home/components/contact',
-  ], function ($, Swiper, lazyload, menus, contact) {
+  './components/menus',
+  './components/contact',
+  './components/photo',
+  ], function ($, Swiper, lazyload, menus, contact, photo) {
 
   var app = {
 
   };
 
-  app.init = function appInit () {
+  app.init = function appInit (options) {
+
+    this.options = options;
+
     menus.init();
     contact.init();
+
+    if (APP.photos) {
+      photo.init(APP.photos, {
+        staticPrefix: options.staticPrefix
+      });
+    }
 
     $('.J_Lazy').lazyload({
       effect : 'fadeIn',

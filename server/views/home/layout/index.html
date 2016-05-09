@@ -43,12 +43,16 @@
   <script src="{{staticPrefix}}/libs/requirejs/require-2.2.0.min.js"></script>
   <script>
     (function(){
+      window.APP = {
+        staticPrefix: '{{staticPrefix}}'
+      };
       requirejs.config({
         baseUrl: '{{jsPrefix}}',
         paths: {
           jquery: '{{staticPrefix}}/libs/jquery/jquery-2.1.4.min',
-          swiper: '{{staticPrefix}}/libs/swiper/js/swiper.jquery.umd.min',
-          lazyload: '{{staticPrefix}}/libs/jquery.lazyload/jquery.lazyload-1.9.7.min',
+          swiper: '{{staticPrefix}}/libs/swiper/js/swiper.jquery.umd',
+          lazyload: '{{staticPrefix}}/libs/jquery.lazyload/jquery.lazyload-1.9.7',
+          popup: '{{staticPrefix}}/libs/popupjs/popup',
         }
       });
     }());
@@ -66,7 +70,9 @@
 
   <script>
   require(['home/app'], function (app) {
-    app.init();
+    app.init({
+      staticPrefix: APP.staticPrefix
+    });
   });
   </script>
 </body>
