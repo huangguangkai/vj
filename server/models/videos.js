@@ -30,6 +30,12 @@ module.exports = function ( sequelize, DataTypes ) {
       defaultValue: '',
       comment: '详情'
     },
+    description_url: {
+      type: DataTypes.STRING(500),
+      allowNull: false,
+      defaultValue: '',
+      comment: '详情图'
+    },
     cover_url: {
       type: DataTypes.STRING(500),
       allowNull: false,

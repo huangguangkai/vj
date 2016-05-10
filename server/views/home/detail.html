@@ -12,16 +12,9 @@
 
 {%block foot%}
 <script>
-APP.photos = [
-  {
-    cover_url: ''
-  },
-  {
-
-  },
-  {},
-  {},
-  {},
-];
+  APP.photos = [];
+  {%for photo in photos%}
+  APP.photos.push({});
+  {%endfor%}
 </script>
 {%endblock%}

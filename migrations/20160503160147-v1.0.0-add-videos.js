@@ -18,11 +18,23 @@ module.exports = {
         charset: 'utf8mb4',
         comment: '标题'
       },
+      title_image: {
+        type: Sequelize.STRING(500),
+        allowNull: false,
+        defaultValue: '',
+        comment: '标题图'
+      },
       description: {
         type: Sequelize.STRING,
         allowNull: false,
         defaultValue: '',
         comment: '详情'
+      },
+      description_url: {
+        type: Sequelize.STRING(500),
+        allowNull: false,
+        defaultValue: '',
+        comment: '详情图'
       },
       cover_url: {
         type: Sequelize.STRING(500),

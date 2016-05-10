@@ -83,6 +83,12 @@ module.exports = function ( sequelize, DataTypes ) {
           foreignKey: 'category_id',
           constraints: false
         });
+
+        PhotoPackage.hasMany(models.Photo, {
+          as: 'photos',
+          constraints: false,
+          foreignKey: 'package_id',
+        });
       }
     }
   });

@@ -2,23 +2,17 @@
 {%extends './layout/index.html'%}
 
 {%block content%}
+{%for staff in list%}
 <div class="about">
   <div class="container">
     <div class="J_Lazy bd"
-    data-original="{{staticPrefix}}/img/demo/pic.jpg">
+    data-original="{{staff.cover_url}}?imageView2/2/w/1040/h/400">
       <div class="mask"></div>
-      <a href="#" target="_blank"></a>
+      {%if staff.url%}
+      <a href="{{staff.url}}" target="_blank"></a>
+      {%endif%}
     </div>
   </div>
 </div>
-
-<div class="about">
-  <div class="container">
-    <div class="J_Lazy bd"
-    data-original="{{staticPrefix}}/img/demo/pic.jpg">
-    <div class="mask"></div>
-      <!-- <a href="#" target="_blank"></a> -->
-    </div>
-  </div>
-</div>
+{%endfor%}
 {%endblock%}

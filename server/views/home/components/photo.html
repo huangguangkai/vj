@@ -1,49 +1,37 @@
 <div class="photos">
   <div class="container">
     <div class="bd">
+      {%for photo in photos%}
+      {%if photo.main%}
       <div id="J_Photo_0"
       class="photo main J_Lazy J_Photo"
       data-id="0"
-      data-photo="{{staticPrefix}}/img/logo.png"
-      data-original="{{staticPrefix}}/img/demo/pic.jpg?imageView2/0/w/90"
+      data-photo="{{photo.cover_url}}"
+      data-original="{{photo.cover_url}}?imageView2/0/w/195"
       >
       <div class="mask"></div>
+      <!-- {%if !photo.cover_url%}
       <table class="text">
-            <tbody>
-                  <tr>
-                        <td class="webfont">VJ</td>
-                  </tr>
-            </tbody>
+        <tbody>
+          <tr>
+            <td class="webfont">VJ</td>
+          </tr>
+        </tbody>
       </table>
+      {%endif%} -->
       </div>
-      <div id="J_Photo_1"
+      {%else%}
+
+      <div id="J_Photo_{{loop.index-1}}"
       class="photo J_Lazy J_Photo"
-      data-id="1"
-      data-photo="{{staticPrefix}}/img/demo/title.png"
-      data-original="{{staticPrefix}}/img/demo/pic.jpg?imageView2/0/w/90">
+      data-id="{{loop.index-1}}"
+      data-photo="{{photo.cover_url}}"
+      data-original="{{photo.cover_url}}?imageView2/0/w/90">
       <div class="mask"></div>
       </div>
-      <div id="J_Photo_2"
-      class="photo J_Lazy J_Photo"
-      data-id="2"
-      data-photo="{{staticPrefix}}/img/demo/pic.jpg"
-      data-original="{{staticPrefix}}/img/demo/pic.jpg?imageView2/0/w/90">
-      <div class="mask"></div>
-      </div>
-      <div id="J_Photo_3"
-      class="photo J_Lazy J_Photo"
-      data-id="3"
-      data-photo="{{staticPrefix}}/img/demo/pic.jpg"
-      data-original="{{staticPrefix}}/img/demo/pic.jpg?imageView2/0/w/90">
-      <div class="mask"></div>
-      </div>
-      <div id="J_Photo_4"
-      class="photo J_Lazy J_Photo"
-      data-id="4"
-      data-photo="{{staticPrefix}}/img/demo/pic.jpg"
-      data-original="{{staticPrefix}}/img/demo/pic.jpg?imageView2/0/w/90">
-      <div class="mask"></div>
-      </div>
+
+      {%endif%}
+      {%endfor%}
     </div>
   </div>
 </div>

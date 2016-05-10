@@ -30,6 +30,12 @@ module.exports = {
         defaultValue: '',
         comment: '封面图片地址'
       },
+      index: {
+        type: Sequelize.INTEGER.UNSIGNED,
+        allowNull: false,
+        defaultValue: 0,
+        comment: '权重'
+      },
       created_at: {
         type: customDataTypes.TIMESTAMP,
         defaultValue: Sequelize.NOW,
@@ -49,6 +55,6 @@ module.exports = {
   },
 
   down: function ( queryInterface, Sequelize ) {
-    return queryInterface.dropTable('staff');
+    return queryInterface.dropTable('staffs');
   }
 };

@@ -1,22 +1,25 @@
+
+{%if !!video && !!video.video_url%}
 <div class="video">
   <div class="container">
     <div class="hd">
-      <embed src="http://player.youku.com/player.php/Type/Folder/Fid/27198547/Ob/1/sid/XMTU2MDIxMjQ2OA==/v.swf" quality="high" width="1000" height="600" align="middle" allowScriptAccess="always" allowFullScreen="true" mode="transparent" type="application/x-shockwave-flash"></embed>
+      <embed src="{{video.video_url}}" quality="high" width="1000" height="600" align="middle" allowScriptAccess="always" allowFullScreen="true" mode="transparent" type="application/x-shockwave-flash"></embed>
     </div>
     <div class="bd">
-      <div class="title">4GridFilms大影四格《锲而不舍 为爱加冕》婚礼MV</div>
+      {%if !!video.title%}
+      <div class="title">{{video.title}}</div>
+      {%endif%}
+
       <div class="content">
-        <!-- <div class="pic">
-          <img src="{{staticPrefix}}/img/demo/pic.jpg" alt="">
-        </div> -->
-        <div class="text">
-          这里是一些文字介绍<br/>
-          这里是一些文字介绍这里是一些文字介绍<br/>
-          这里是一些文字介绍这里是一些文字介绍这里是一些文字介绍<br/>
-          这里是一些文字介绍这里是一些文字介绍这里是一些文字介绍这里是一些文字介绍<br/>
-          这里是一些文字介绍这里是一些文字介绍这里是一些文字介绍这里是一些文字介绍这里是一些文字介绍<br/>
+      {%if !!video.description_url%}
+        <div class="pic">
+          <img src="{{video.description_url}}?imageView2/2/w/1040" alt="">
         </div>
+      {%elseif !!video.description%}
+        <div class="text">{{video.description}}</div>
+      {%endif%}
       </div>
     </div>
   </div>
 </div>
+{%endif%}

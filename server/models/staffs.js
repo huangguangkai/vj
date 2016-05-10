@@ -30,6 +30,12 @@ module.exports = function ( sequelize, DataTypes ) {
       defaultValue: '',
       comment: '封面图片地址'
     },
+    index: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      defaultValue: 0,
+      comment: '权重'
+    },
     created_at: {
       type: customDataTypes.TIMESTAMP,
       defaultValue: DataTypes.NOW,

@@ -18,6 +18,12 @@ module.exports = function ( sequelize, DataTypes ) {
       charset: 'utf8mb4',
       comment: '分类名'
     },
+    name_image: {
+      type: DataTypes.STRING(500),
+      allowNull: false,
+      defaultValue: '',
+      comment: '分类名图'
+    },
     cover_url: {
       type: DataTypes.STRING(500),
       allowNull: false,

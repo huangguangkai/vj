@@ -6,23 +6,17 @@
   <div class="container">
     <div id="J_Swiper" class="swiper-container">
       <div class="swiper-wrapper">
+        {%for banner in banners%}
           <div class="swiper-slide">
           <div
           class="swiper-lazy"
-          data-background="{{staticPrefix}}/img/demo/pic.jpg">
-          <a href="/" target="_blank"></a>
+          data-background="{{banner.cover_url}}?imageView2/2/w/1040/h/650">
+          {%if banner.url%}
+          <a href="{{banner.url}}" target="_blank"></a>
+          {%endif%}
           </div>
           </div>
-          <div class="swiper-slide">
-          <div
-          class="swiper-lazy"
-          data-background="{{staticPrefix}}/img/demo/pic-2.jpg"></div>
-          </div>
-          <div class="swiper-slide">
-          <div
-          class="swiper-lazy"
-          data-background="{{staticPrefix}}/img/demo/pic.jpg"></div>
-          </div>
+        {%endfor%}
       </div>
       <!-- 如果需要分页器 -->
       <div class="swiper-pagination"></div>

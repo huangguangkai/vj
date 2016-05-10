@@ -28,6 +28,10 @@ define(['jquery', 'popup'], function ($, Popup) {
         self.destroyDialog();
       });
 
+      $(dialog.backdrop).one('click', function () {
+        self.destroyDialog();
+      });
+
       $(document).on('keyup.photo', function (e) {
         var keyCode = e.keyCode;
         if (keyCode == 37) {
@@ -37,10 +41,15 @@ define(['jquery', 'popup'], function ($, Popup) {
         if ( keyCode == 39) {
           self.handleNext();
         }
+
+        if ( keyCode == 27) {
+          self.destroyDialog();
+        }
       });
     },
     destroyDialog: function () {
       this.dialog.close().remove();
+      $(document).off('keyup.photo');
     },
     modifyDialog: function (photo) {
       var self = this;

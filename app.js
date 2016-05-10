@@ -39,7 +39,7 @@ app.use(etag());
 const isDev = 'production' !== app.env;
 const cdnPrefix = config.qiniu.buckets.static.prefix;
 const staticPrefix = isDev ? '' : cdnPrefix;
-const jsPrefix = isDev ? './src' : (cdnPrefix + '/js');
+const jsPrefix = isDev ? '/src' : (cdnPrefix + '/js');
 
 // render
 app.context.render = render({

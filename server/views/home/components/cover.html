@@ -1,32 +1,25 @@
+{%for item in list%}
 <div class="cover">
   <div class="container">
-    <a href="#" class="bd">
+    <a href="{{item.url}}" class="bd">
       <div class="J_Lazy title"
-      data-original="{{staticPrefix}}/img/demo/title.png">
-      <!-- <span class="text">title</span> -->
-      </div>
-      <div class="mask"></div>
-      <div class="J_Lazy pic"
-      data-original="{{staticPrefix}}/img/demo/pic.jpg"></div>
-    </a>
-  </div>
-</div>
-
-<div class="cover">
-  <div class="container">
-    <a href="#" class="bd">
-      <div class="J_Lazy title">
+      {%if item.name_image%}
+      data-original="{{item.name_image}}?imageView2/2/w/1040/h/600"
+      {%endif%}>
+      {%if !item.name_image%}
       <table class="text">
-            <tbody>
-                  <tr>
-                        <td class="webfont">标题</td>
-                  </tr>
-            </tbody>
+        <tbody>
+          <tr>
+              <td>{{item.name}}</td>
+          </tr>
+        </tbody>
       </table>
+      {%endif%}
       </div>
       <div class="mask"></div>
       <div class="J_Lazy pic"
-      data-original="{{staticPrefix}}/img/demo/pic.jpg"></div>
+      data-original="{{item.cover_url}}?imageView2/2/w/1040/h/600"></div>
     </a>
   </div>
 </div>
+{%endfor%}
