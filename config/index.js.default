@@ -2,4 +2,27 @@
 
 module.exports = {
   port: 3088,
+  location: {
+    origin: 'http://localhost:3088'
+  },
+  mysql: {
+    host: '127.0.0.1',
+    port: 3306,
+    user: 'root',
+    password: '',
+    database: 'vj'
+  },
+  seq_options: {},
+  qiniu: {
+    keys: {
+      access_key: '',
+      secret_key: '',
+    },
+    buckets: {
+      static: {
+        name: 'vjstudio',
+        prefix: 'http://o6li3m5d4.bkt.clouddn.com'
+      },
+    }
+  },
 };

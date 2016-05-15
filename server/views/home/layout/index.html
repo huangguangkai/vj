@@ -46,15 +46,16 @@
   <script>
     (function(){
       window.APP = {
-        staticPrefix: '{{staticPrefix}}'
+        staticPrefix: '{{staticPrefix}}',
+        jsPrefix: '{{jsPrefix}}'
       };
       requirejs.config({
         baseUrl: '{{jsPrefix}}',
         paths: {
           jquery: '{{staticPrefix}}/libs/jquery/jquery-2.1.4.min',
-          swiper: '{{staticPrefix}}/libs/swiper/js/swiper.jquery.umd',
-          lazyload: '{{staticPrefix}}/libs/jquery.lazyload/jquery.lazyload-1.9.7',
-          popup: '{{staticPrefix}}/libs/popupjs/popup',
+          swiper: '../libs/swiper/js/swiper.jquery.umd',
+          lazyload: '../libs/jquery.lazyload/jquery.lazyload-1.9.7',
+          popup: '../libs/popupjs/popup',
         }
       });
     }());
