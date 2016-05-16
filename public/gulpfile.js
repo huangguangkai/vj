@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * todo lib,src publish / img compress
+ *
  */
 
 const fs = require('fs');
