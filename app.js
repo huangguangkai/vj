@@ -4,7 +4,6 @@ const path = require('path');
 
 const koa = require('koa');
 const responseTime = require('koa-response-time');
-const staticCache = require('koa-static-cache');
 const bodyParser = require('koa-bodyparser');
 const conditional = require('koa-conditional-get');
 const etag = require('koa-etag');
@@ -26,9 +25,10 @@ if ('development' === app.env) {
   app.use(logger());
 }
 
-app.use(staticCache(path.join(root, 'public/'), {
+app.use(middlewares.staticCache({
+  dir: path.join(root, 'public/'),
   maxAge: 30 * 24 * 60 * 60,
-  gzip: true
+  gzip: true,
 }));
 
 app.use(bodyParser());
