@@ -1,5 +1,7 @@
 'use strict';
 const config = require('../../config');
+const auth = require('../middlewares/auth_token');
+
 const bannerService = require('../services/banner_service');
 const homeRecommendService = require('../services/home_recommend_service');
 const photoCategoryService = require('../services/photo_category_service');
@@ -7,6 +9,8 @@ const photoPackageService = require('../services/photo_package_service');
 const photoService = require('../services/photo_service');
 const videoService = require('../services/video_service');
 const staffService = require('../services/staff_service');
+
+const authService = require('../services/auth_service');
 
 module.exports = function ( router ) {
   router.get('/', index);
@@ -24,6 +28,11 @@ module.exports = function ( router ) {
   router.get('/children', children);
 
   router.get('/about', about);
+
+  router.post('/auth/login', login);
+
+  router.use('*', auth());
+  // 以下路由都去要授权登录才能访问
 };
 
 function* index() {
@@ -335,4 +344,12 @@ function* about() {
     title: '关于我们',
     list: result
   });
+}
+
+function* login() {
+  const body     = this.request.body;
+  const username = body.username;
+  const password = body.password;
+
+  this.body = yield authService.login(username, password);
 }

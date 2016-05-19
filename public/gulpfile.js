@@ -37,7 +37,6 @@ const config = {
   },
   lib: {
     root: './libs',
-    src: ['./libs/**/*.js', './libs/**/*.css', './libs/**/*.map']
   }
 };
 
@@ -166,11 +165,14 @@ gulp.task('imgpub', [], function () {
 });
 
 gulp.task('libpub', [], function () {
-  let src = config.lib.src;
+  const fliePath = argv.path || '',
+        file = argv.file || '**';
+
+  const src = path.join(config.lib.root, fliePath, file);
 
   console.log(chalk.green('libpub:'), chalk.green('-> qiniu...ing'));
 
-  return publish(src, path.join(config.qiniu.root, config.lib.root));
+  return publish(src, path.join(config.lib.root, fliePath));
 
 });
 

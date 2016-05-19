@@ -9,6 +9,7 @@ const conditional = require('koa-conditional-get');
 const etag = require('koa-etag');
 const render = require('koa-swig');
 const enrouten = require('siren-enrouten');
+const favicon = require('koa-favicon');
 
 const config = require('./config');
 const StyleHelper = require('./libs/style_helper');
@@ -25,11 +26,15 @@ if ('development' === app.env) {
   app.use(logger());
 }
 
+app.use(favicon(root + '/public/favicon.ico'));
+
 app.use(middlewares.staticCache({
   dir: path.join(root, 'public/'),
   maxAge: 30 * 24 * 60 * 60,
   gzip: true,
 }));
+
+app.use(middlewares.exception(app));
 
 app.use(bodyParser());
 
@@ -64,7 +69,9 @@ app.use(middlewares.apiNotFound());
 
 app.use(enrouten(app, {
   basedir: root,
-  directory: 'server/controllers'
+  index: 'server/routes/index',
+  directory: 'server/controllers',
+  routes: []
 }));
 
 app.on('error', function (err) {
