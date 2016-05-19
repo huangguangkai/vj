@@ -26,7 +26,7 @@ if ('development' === app.env) {
   app.use(logger());
 }
 
-app.use(favicon(root + '/public/favicon.ico'));
+// app.use(favicon(root + '/public/favicon.ico'));
 
 app.use(middlewares.staticCache({
   dir: path.join(root, 'public/'),

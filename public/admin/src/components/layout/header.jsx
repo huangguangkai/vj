@@ -2,11 +2,17 @@
 import React from 'react'
 import {Link} from 'react-router'
 import * as auth from '../../utils/auth'
+import xhr from '../../utils/jquery.xhr'
 
 export default React.createClass({
   handleLogout() {
-    auth.removeToken();
-    this.props.history.pushState(null, '/login');
+    const self = this;
+
+    xhr.get('/auth/logout')
+    .done(function (ret) {
+      auth.removeToken();
+      self.props.history.pushState(null, '/login');
+    })
   },
   render() {
     return (

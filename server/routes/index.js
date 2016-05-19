@@ -1,6 +1,7 @@
 'use strict';
 const config = require('../../config');
 const auth = require('../middlewares/auth_token');
+const authToken = require('../../libs/auth_token');
 
 const bannerService = require('../services/banner_service');
 const homeRecommendService = require('../services/home_recommend_service');
@@ -9,8 +10,7 @@ const photoPackageService = require('../services/photo_package_service');
 const photoService = require('../services/photo_service');
 const videoService = require('../services/video_service');
 const staffService = require('../services/staff_service');
-
-const authService = require('../services/auth_service');
+const adminService = require('../services/admin_service');
 
 module.exports = function ( router ) {
   router.get('/', index);
@@ -351,5 +351,33 @@ function* login() {
   const username = body.username;
   const password = body.password;
 
-  this.body = yield authService.login(username, password);
+  const admin = yield adminService.findOne({
+    where: {
+      username: username
+    }
+  });
+
+  if ( !admin ) {
+    throw ('admin not exist');
+  }
+
+  if ( !admin.authenticate(password) ) {
+    throw ('password invalid');
+  }
+
+  const adminId = admin.id;
+
+  const adminData = {
+    id: adminId,
+    username: admin.username,
+    nickname: admin.nickname,
+    created_at: admin.created_at
+  };
+
+  const token = authToken.createAndStore(adminId, adminData, authToken.TOKEN_EXPIRE);
+
+  this.body = {
+    admin: adminData,
+    token: token
+  }
 }

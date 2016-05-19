@@ -1,5 +1,7 @@
 'use strict';
 
+const authToken = require('../../libs/auth_token');
+
 module.exports = function ( router ) {
   router.get('/logout', logout);
   router.get('/test', testAuth);
@@ -9,11 +11,12 @@ module.exports = function ( router ) {
 function* logout() {
   const userId = this.user.id;
 
-  console.log(this.user);
-
   try {
-    yield authService.logout(userId, this.token);
-    this.body = { user_id: userId };
+    const result = yield authToken.expireUserToken(userId, this.token);
+
+    this.body = {
+      status: 1,
+    };
   } catch ( error ) {
     this.body = {};
   }

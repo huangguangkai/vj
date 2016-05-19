@@ -18,14 +18,9 @@ module.exports = function () {
       const token = authToken.parseFromHeaders(this.header);
       this.token  = token;
 
-      if (token !== authToken.defaultToken) {
-        throw ('token invalid');
-      }
+      const data = yield authToken.getDataByToken(token);
 
-      this.user = {
-        username: 'admin',
-        nickname: 'admin',
-      };
+      this.user = data;
 
     } catch ( err ) {
       this.throw(401);
