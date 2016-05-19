@@ -20,7 +20,8 @@ const gulp = require('gulp'),
   webpack = require('webpack-stream'),
   revCollector = require('gulp-rev-collector'),
   shell = require('shelljs'),
-  runSequence = require('gulp-run-sequence');
+  runSequence = require('gulp-run-sequence'),
+  clean = require('gulp-clean');
 
 const envConfig = require('../config');
 
@@ -215,8 +216,12 @@ gulp.task('admin-publish-html', function (cb) {
   shell.exec(scripts);
 });
 
+gulp.task('admin-clean', function() {
+  return gulp.src('./admin/build').pipe(clean());
+});
+
 gulp.task('admin', function (cb) {
-  runSequence('admin-build-js', 'admin-build-html', ['admin-publish-js', 'admin-publish-html'], cb);
+  runSequence('admin-clean', 'admin-build-js', 'admin-build-html', ['admin-publish-js', 'admin-publish-html'], cb);
 });
 
 function publish(src, dir) {

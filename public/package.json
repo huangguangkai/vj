@@ -52,6 +52,7 @@
     "gulp-rev": "^7.0.0",
     "gulp-rev-collector": "^1.0.3",
     "shelljs": "^0.7.0",
-    "gulp-run-sequence": "^0.3.2"
+    "gulp-run-sequence": "^0.3.2",
+    "gulp-clean": "^0.3.2"
   }
 }
