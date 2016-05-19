@@ -15,7 +15,11 @@ const gulp = require('gulp'),
   minifyCSS = require('gulp-minify-css'),
   LessPluginAutoPrefix = require('less-plugin-autoprefix'),
   qiniu = require('gulp-qiniu'),
-  rjs = require('requirejs');
+  rjs = require('requirejs'),
+  rev = require('gulp-rev'),
+  webpack = require('webpack-stream'),
+  revCollector = require('gulp-rev-collector'),
+  shell = require('shelljs');
 
 const envConfig = require('../config');
 
@@ -176,8 +180,44 @@ gulp.task('libpub', [], function () {
 
 });
 
-function publish(src, dir) {
+gulp.task('admin-build-js', function () {
+  return gulp.src('./admin/src/**/*.jsx')
+    .pipe(webpack(require('./webpack.config.prod')))
+    .pipe(uglify())
+    .pipe(rev())
+    .pipe(gulp.dest('./admin/build/'))
+    .pipe(rev.manifest())
+    .pipe(gulp.dest('./admin/build/rev/'));
+});
 
+gulp.task('admin-publish-js', ['admin-build-js'], function () {
+  return publish('admin/build/*.js', 'admin');
+});
+
+gulp.task('admin-build-html', function () {
+  return gulp.src(['./admin/build/rev/**/*.json', './admin/index.html'])
+    .pipe(revCollector({
+      replaceReved: true,
+      dirReplacements: {
+        'http://127.0.0.1:3089/admin/build/': envConfig.qiniu.buckets.static.prefix + '/admin/',
+      },
+    }))
+    .pipe(gulp.dest('./admin/build/'));
+});
+
+gulp.task('admin-publish-html', ['admin-build-html'], function (cb) {
+  const buildDir = path.join(__dirname, 'build');
+  const indexHtmlFile = path.join(__dirname, 'admin', 'build', 'index.html');
+  const env = process.env.NODE_ENV;
+
+  const scripts = `scp ${indexHtmlFile} ${'stone'}:/root/vj/public/admin/build/`;
+  shell.exec(scripts);
+});
+
+gulp.task('admin', ['admin-publish-js', 'admin-publish-html']);
+
+function publish(src, dir) {
+  console.log(src, dir);
   return gulp.src(src)
     .pipe(qiniu({
       accessKey: config.qiniu.access_key,
