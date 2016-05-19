@@ -19,7 +19,8 @@ const gulp = require('gulp'),
   rev = require('gulp-rev'),
   webpack = require('webpack-stream'),
   revCollector = require('gulp-rev-collector'),
-  shell = require('shelljs');
+  shell = require('shelljs'),
+  runSequence = require('gulp-run-sequence');
 
 const envConfig = require('../config');
 
@@ -190,7 +191,7 @@ gulp.task('admin-build-js', function () {
     .pipe(gulp.dest('./admin/build/rev/'));
 });
 
-gulp.task('admin-publish-js', ['admin-build-js'], function () {
+gulp.task('admin-publish-js', function () {
   return publish('admin/build/*.js', 'admin');
 });
 
@@ -205,7 +206,7 @@ gulp.task('admin-build-html', function () {
     .pipe(gulp.dest('./admin/build/'));
 });
 
-gulp.task('admin-publish-html', ['admin-build-html'], function (cb) {
+gulp.task('admin-publish-html', function (cb) {
   const buildDir = path.join(__dirname, 'build');
   const indexHtmlFile = path.join(__dirname, 'admin', 'build', 'index.html');
   const env = process.env.NODE_ENV;
@@ -214,7 +215,9 @@ gulp.task('admin-publish-html', ['admin-build-html'], function (cb) {
   shell.exec(scripts);
 });
 
-gulp.task('admin', ['admin-publish-js', 'admin-publish-html']);
+gulp.task('admin', function (cb) {
+  runSequence('admin-build-js', 'admin-build-html', ['admin-publish-js', 'admin-publish-html'], cb);
+});
 
 function publish(src, dir) {
   console.log(src, dir);
