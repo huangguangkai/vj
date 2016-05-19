@@ -21,9 +21,7 @@ export default React.createClass({
   },
   setUser(user) {
     const self = this;
-    this.setState({user}, function() {
-      console.log(self.state);
-    });
+    this.setState({user});
   },
   renderChildren() {
     const self = this;
