@@ -23,6 +23,7 @@ export default (
         <Route path="category" component={components.PhotoCategory}></Route>
         <Route path="package" component={components.PhotoPackage}></Route>
         <Route path="list" component={components.PhotoList}></Route>
+        <Route path="list/post" component={components.PhotoPost}></Route>
       </Route>
       <Route path="/video">
         <Route path="wedding" component={components.VideoWedding}></Route>

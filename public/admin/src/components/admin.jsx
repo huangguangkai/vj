@@ -3,6 +3,7 @@ import { Route, Link } from 'react-router'
 
 import Header from './layout/header.jsx'
 import Nav from './layout/nav.jsx'
+import xhr from '../utils/jquery.xhr'
 
 export default React.createClass({
   renderChildren() {
@@ -13,8 +14,14 @@ export default React.createClass({
 
     return React.Children.map(children, function (child) {
       return React.cloneElement(child, {
+        api: self.api
       })
     })
+  },
+  api: {
+    getPhotoCategories(query) {
+      return xhr.get('/photos/categories', query);
+    },
   },
   componentDidMount() {
     var $main = $(this.refs.main);
@@ -25,16 +32,22 @@ export default React.createClass({
     });
 
   },
+  shouldComponentUpdate(nextProps, nextState) {
+    return (this.props !== nextProps);
+  },
   render() {
     const self = this;
     const props = self.props;
+    const state = self.state;
 
     return (
       <div>
         <Header history={props.history}/>
         <div ref="main" className="main">
         <Nav history={props.history}/>
-        <div className="content">{this.renderChildren()}</div>
+        <div className="content">
+        {this.renderChildren()}
+        </div>
         </div>
       </div>
     )

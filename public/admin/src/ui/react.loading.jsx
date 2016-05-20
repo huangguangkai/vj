@@ -2,7 +2,6 @@
 import React from 'react'
 import classNames from 'classnames'
 
-
 export const Empty = React.createClass({
   style: {
     padding: '100px 0',

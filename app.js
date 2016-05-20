@@ -66,6 +66,7 @@ app.context.render = render({
 });
 
 app.use(middlewares.apiNotFound());
+app.use(middlewares.condition());
 
 app.use(enrouten(app, {
   basedir: root,

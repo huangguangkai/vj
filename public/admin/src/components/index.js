@@ -13,5 +13,6 @@ export GroupPhotographer from './group/photographer.jsx'
 export PhotoCategory from './photo/category.jsx'
 export PhotoPackage from './photo/package.jsx'
 export PhotoList from './photo/list.jsx'
+export PhotoPost from './photo/post.jsx'
 
 export VideoWedding from './video/wedding.jsx'

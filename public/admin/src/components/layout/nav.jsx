@@ -124,7 +124,7 @@ const Nav = React.createClass({
       const modules = self.modules
 
       return (
-        <nav>
+        <nav className="sidebar">
           {((modules) => {
 
             return modules.map(function (mod, i) {

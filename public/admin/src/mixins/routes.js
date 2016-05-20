@@ -2,20 +2,20 @@
 export default {
   modules: [
     {
-      name: '运营管理',
-      routeReg: /^\/coo/,
-      items: [
-        {route: '/coo/banner', text: '首页广告'},
-        {route: '/coo/recommend', text: '首页推荐'},
-      ],
-    },
-    {
       name: '照片管理',
       routeReg: /^\/photo/,
       items: [
         {route: '/photo/list', text: '照片'},
         {route: '/photo/category', text: '分类'},
         {route: '/photo/package', text: '套餐'},
+      ],
+    },
+    {
+      name: '运营管理',
+      routeReg: /^\/coo/,
+      items: [
+        {route: '/coo/banner', text: '首页广告'},
+        {route: '/coo/recommend', text: '首页推荐'},
       ],
     },
     {

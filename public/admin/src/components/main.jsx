@@ -20,7 +20,6 @@ export default React.createClass({
     }
   },
   setUser(user) {
-    const self = this;
     this.setState({user});
   },
   renderChildren() {
