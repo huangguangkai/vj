@@ -3,7 +3,7 @@ import React from 'react'
 import Qiniu from 'react-qiniu'
 import update from 'react-addons-update'
 import Promise from 'bluebird'
-import xhr from '../../utils/jquery.xhr'
+import xhr from '../../../utils/jquery.xhr'
 
 export default React.createClass({
   getInitialState() {
@@ -109,11 +109,12 @@ export default React.createClass({
               return '还未上传照片'
             }
 
-            return files.map(function (file) {
+            return files.map(function (file, i) {
+
               return (
-                <div style={{
+                <div key={file.name} style={{
                   display: 'inline-block',
-                  width: '320',
+                  width: '320px',
                   margin: '0 10px 10px 0'
                 }}>
                   <img src={`${file.preview}`} width="320"/>

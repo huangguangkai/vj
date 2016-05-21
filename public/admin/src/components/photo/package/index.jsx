@@ -1,8 +1,5 @@
 
 import React from 'react'
-import xhr from '../../utils/jquery.xhr'
-import {Loading, Empty} from '../../ui/react.loading.jsx'
-import Pagination from '../../ui/react.pagination.jsx'
 import update from 'react-addons-update'
 import {
   Navbar,
@@ -10,13 +7,27 @@ import {
   NavItem,
 } from 'react-bootstrap'
 
+import xhr from '../../../utils/jquery.xhr'
+import {Loading, Empty} from '../../../ui/react.loading.jsx'
+import Pagination from '../../../ui/react.pagination.jsx'
+import Cover from '../../../ui/react.cover.jsx'
+
+const DELETE_STATUS={
+  NONE: 0,
+  DELETED: 1
+};
+
 const Bar = React.createClass({
   render() {
     return (
       <Navbar>
+        <Nav>
+          <NavItem href={`#/photo/package?delete_status=${DELETE_STATUS.NONE}`}>展示中</NavItem>
+          <NavItem href={`#/photo/package?delete_status=${DELETE_STATUS.DELETED}`}>已隐藏</NavItem>
+        </Nav>
         <Navbar.Collapse>
           <Nav pullRight>
-            <NavItem href="#/photo/list/post">新增照片</NavItem>
+            <NavItem href="#/photo/package/create">新增套餐</NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -50,18 +61,25 @@ const List = React.createClass({
               <td style={{
                 width: '320px'
               }}>
-              <a href={item.cover_url} target="_blank">
-              <img src={item.cover_url + '?imageView2/2/w/320'} width="320"/>
-              </a>
+              {((item) => {
+                if (item.cover_url) {
+                  return <Cover
+                  nameImage={item.name_image}
+                  name={item.name}
+                  coverUrl={item.cover_url}/>
+                } else {
+                  return '无'
+                }
+              })(item)}
               </td>
               <td style={{
                 width: '50%',
                 wordBreak: 'break-all'
               }}>
-              <p>照片名：{item.name || '无'}</p>
-              <p>照片描述：{item.description || '无'}</p>
+              <p>套餐名：{item.name || '无'}</p>
+              <p>套餐描述：{item.description || '无'}</p>
               <p>
-              分类/套餐：
+              分类：
               <select
               onChange={props.handleCategory}
               data-index={i}
@@ -76,37 +94,49 @@ const List = React.createClass({
                   });
                 })(categories)}
               </select>
-              &nbsp;&nbsp;
-              {((item, categories) => {
-                const cid = item.category_id;
-                let pkgs = props.findPkgsByCid(cid);
 
-                return(
-                  <select
-                  onChange={props.handlePackage}
-                  data-index={i}
-                  value={item.package_id}>
-                    <option value="0">无套餐</option>
-                    {((pkgs) => {
-                      return pkgs.map(function (pkg, p) {
-                        return (<option
-                          key={`${pkg.id}_${p}`}
-                          value={pkg.id}>
-                          {pkg.name}</option>)
-                      });
-                    })(pkgs)}
-                  </select>
-                )
-              })(item, categories)}
-
+              </p>
+              <p>视频：
+              {((item) => {
+                if (item.video_url) {
+                  return <a target="_blank" href={item.video_url}>点击查看</a>
+                } else {
+                  return '无'
+                }
+              })(item)}
               </p>
               </td>
               <td>
-              <button
-              className="btn btn-danger"
-              data-index={i}
-              onClick={props.handleDelete}
-              >删除</button>
+              {((item) => {
+                if (item.delete_status === DELETE_STATUS.NONE) {
+                  return (
+                    <button
+                    style={{
+                      marginRight: '10px'
+                    }}
+                    className="btn btn-danger"
+                    data-index={i}
+                    onClick={props.handleHide}>
+                    隐藏</button>
+                  )
+                } else if (item.delete_status === DELETE_STATUS.DELETED) {
+                  return (
+                    <button
+                    style={{
+                      marginRight: '10px'
+                    }}
+                    className="btn btn-primary"
+                    data-index={i}
+                    onClick={props.handleShow}>
+                    展示</button>
+                  )
+                }
+
+              })(item)}
+              <a
+              href={`#/photo/package/${item.id}`}
+              className="btn btn-default"
+              >编辑</a>
               </td>
             </tr>
           )
@@ -120,7 +150,7 @@ const List = React.createClass({
 });
 
 export default React.createClass({
-  dataUrl: '/photos',
+  dataUrl: '/photos/packages',
   getInitialState() {
     return {
       data: null,
@@ -139,29 +169,18 @@ export default React.createClass({
     const query = props.location.query;
     return {
       page: query.page || 1,
-      perpage: query.perpage || 20
+      perpage: query.perpage || 20,
+      delete_status: query.delete_status || DELETE_STATUS.NONE
     }
   },
   getData(query) {
     return xhr.get(this.dataUrl, query)
   },
-  putPhotoById(id, body) {
-    return xhr.put(`/photos/${id}`, body)
+  putPackageById(id, body) {
+    return xhr.put(`${this.dataUrl}/${id}`, body)
   },
-  deletePhotoById(id) {
-    return xhr.delete(`/photos/${id}`)
-  },
-  findPkgsByCid(cid) {
-    const categories = this.state.categories;
-    let pkgs = null;
-    for (let p = 0; p < categories.length; p ++) {
-      let category = categories[p];
-      if (cid == category.id) {
-        pkgs = category.packages;
-        break;
-      }
-    }
-    return pkgs || []
+  putPhotosByPid(id, body) {
+    return xhr.put(`/photo_packages/${id}/photos`, body)
   },
   handleData(props) {
     const self = this;
@@ -173,9 +192,7 @@ export default React.createClass({
 
     $.when(
       self.getData(query),
-      props.api.getPhotoCategories({
-        with_pkg: 1
-      }))
+      props.api.getPhotoCategories())
     .done(function () {
       let data = arguments[0][0];
       let categories = arguments[1][0];
@@ -214,13 +231,9 @@ export default React.createClass({
 
     const cname = target[selectedIndex].innerText;
 
-    const pkgs = self.findPkgsByCid(cid);
-
     const newObj = {
       category_id: cid,
       category_name: cname,
-      package_id: pkgs.length ? pkgs[0].id : 0,
-      package_name: pkgs.length ? pkgs[0].name : ''
     };
 
     const data = update(state.data, {
@@ -231,46 +244,11 @@ export default React.createClass({
       }
     });
 
-    self.putPhotoById(item.id, newObj);
+    self.putPackageById(item.id, newObj);
+    self.putPhotosByPid(item.id, newObj);
     self.setState({data});
   },
-  handlePackage(e) {
-    const target = e.target;
-    const pid = Number(target.value);
-
-    const self = this;
-    const state = self.state;
-
-    const selectedIndex = target.selectedIndex;
-
-    const index = target.dataset.index;
-    const item = state.data.data[index];
-
-    const pname = target[selectedIndex].innerText;
-
-    const data = update(state.data, {
-      data: {
-        [index]: {
-          $merge: {
-            package_id: pid,
-            package_name: pname
-          }
-        }
-      }
-    });
-
-    self.putPhotoById(item.id, {
-      category_id: item.category_id,
-      category_name: item.category_name,
-      package_id: pid,
-      package_name: pname
-    });
-
-    self.setState({data});
-  },
-  handleDelete(e) {
-
-    if (!confirm('确认删除')) return;
+  handleShow(e) {
 
     const self = this;
     const state = self.state;
@@ -280,11 +258,30 @@ export default React.createClass({
     const item = state.data.data[index];
     const id = item.id;
 
-    self.deletePhotoById(id)
+    self.putPackageById(id, {
+      delete_status: DELETE_STATUS.NONE
+    })
     .done(function (ret) {
-      if (ret.status) {
-        self.handleData(self.props);
-      }
+      self.handleData(self.props);
+    });
+  },
+  handleHide(e) {
+
+    if (!confirm('确认隐藏')) return;
+
+    const self = this;
+    const state = self.state;
+
+    const target = e.target;
+    const index = target.dataset.index;
+    const item = state.data.data[index];
+    const id = item.id;
+
+    self.putPackageById(id, {
+      delete_status: DELETE_STATUS.DELETED
+    })
+    .done(function (ret) {
+      self.handleData(self.props);
     });
   },
   componentWillMount() {
@@ -309,10 +306,9 @@ export default React.createClass({
               return (
                 <div>
                 <List
-                findPkgsByCid={self.findPkgsByCid}
                 handleCategory={self.handleCategory}
-                handlePackage={self.handlePackage}
-                handleDelete={self.handleDelete}
+                handleShow={self.handleShow}
+                handleHide={self.handleHide}
                 {...props}
                 {...state}/>
 

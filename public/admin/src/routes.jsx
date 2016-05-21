@@ -21,7 +21,10 @@ export default (
       </Route>
       <Route path="/photo">
         <Route path="category" component={components.PhotoCategory}></Route>
+        <Route path="category/:id" component={components.PhotoCategoryEdit}></Route>
         <Route path="package" component={components.PhotoPackage}></Route>
+        <Route path="package/create" component={components.PhotoPackageEdit}></Route>
+        <Route path="package/:id" component={components.PhotoPackageEdit}></Route>
         <Route path="list" component={components.PhotoList}></Route>
         <Route path="list/post" component={components.PhotoPost}></Route>
       </Route>

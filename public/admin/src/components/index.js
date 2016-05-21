@@ -10,9 +10,11 @@ export CooRecommend from './coo/recommend.jsx'
 
 export GroupPhotographer from './group/photographer.jsx'
 
-export PhotoCategory from './photo/category.jsx'
-export PhotoPackage from './photo/package.jsx'
-export PhotoList from './photo/list.jsx'
-export PhotoPost from './photo/post.jsx'
+export PhotoCategory from './photo/category/index.jsx'
+export PhotoCategoryEdit from './photo/category/edit.jsx'
+export PhotoPackage from './photo/package/index.jsx'
+export PhotoPackageEdit from './photo/package/edit.jsx'
+export PhotoList from './photo/list/index.jsx'
+export PhotoPost from './photo/list/post.jsx'
 
 export VideoWedding from './video/wedding.jsx'

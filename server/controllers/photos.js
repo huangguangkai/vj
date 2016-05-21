@@ -4,6 +4,7 @@ const config = require('../../config');
 
 const photoService = require('../services/photo_service');
 const photoCategoryService = require('../services/photo_category_service');
+const photoPackageService = require('../services/photo_package_service');
 
 module.exports = function ( router ) {
   router.get('/', list);
@@ -14,6 +15,13 @@ module.exports = function ( router ) {
   router.post('/', postPhoto);
 
   router.get('/categories', categories);
+  router.get('/categories/:id', getCategoryById);
+  router.put('/categories/:id', putCategoryById);
+
+  router.get('/packages', packages);
+  router.get('/packages/:id', getPackageById);
+  router.put('/packages/:id', putPackageById);
+  // router.delete('/packages/:id', deletePackageById);
 };
 
 /**
@@ -24,7 +32,7 @@ function* list() {
   const condition = this.request.condition;
 
   const result = yield photoService.findAndCountPhotos({
-    order: [['created_at', 'DESC']],
+    order: [['updated_at', 'DESC']],
     offset: condition.offset,
     limit: condition.limit,
     raw: true
@@ -91,5 +99,75 @@ function* categories() {
   }
 
   this.body = yield photoCategoryService.findPhotoCategories(query);
+}
 
+/**
+ * 获取分类
+ */
+function* getCategoryById() {
+  const id = this.params.id;
+  this.body = yield photoCategoryService.findPhotoCategoryById(id);
+}
+
+/**
+ * 修改分类
+ */
+function* putCategoryById() {
+  const id = this.params.id;
+  const body = this.request.body;
+
+  this.body = yield photoCategoryService.updatePhotoCategory(body, {
+    id: id
+  });
+}
+
+/**
+ * 获取照片套餐列表
+ */
+function* packages() {
+  const query = this.query;
+  const condition = this.request.condition;
+
+  const result = yield photoPackageService.findAndCountPhotoPackages({
+    where: {
+      delete_status: query.delete_status
+    },
+    order: [['updated_at', 'DESC']],
+    offset: condition.offset,
+    limit: condition.limit,
+    raw: true
+  });
+
+  this.body = {
+    count: result.count,
+    data: result.rows
+  };
+}
+
+/**
+ * 获取套餐
+ */
+function* getPackageById() {
+  const id = this.params.id;
+  this.body = yield photoPackageService.findPhotoPackageById(id);
+}
+
+/**
+ * 修改套餐
+ */
+function* putPackageById() {
+  const id = this.params.id;
+  const body = this.request.body;
+  this.body = yield photoPackageService.updatePhotoPackage(body, {
+    id: id
+  });
+}
+
+/**
+ * 删除套餐
+ */
+function* deletePackageById() {
+  const id = this.params.id;
+  const result = yield photoPackageService.deletePhotoPackage(id);
+  this.body = {status: 1};
 }

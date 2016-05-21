@@ -14,6 +14,7 @@ module.exports = {
       category_id: {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
+        defaultValue: 0,
         comment: '分类ID'
       },
       category_name: {

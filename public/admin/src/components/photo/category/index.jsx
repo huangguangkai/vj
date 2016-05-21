@@ -2,9 +2,9 @@
 import React from 'react'
 import update from 'react-addons-update'
 
-import xhr from '../../utils/jquery.xhr'
-import {Loading, Empty} from '../../ui/react.loading.jsx'
-import Cover from '../../ui/react.cover.jsx'
+import xhr from '../../../utils/jquery.xhr'
+import {Loading, Empty} from '../../../ui/react.loading.jsx'
+import Cover from '../../../ui/react.cover.jsx'
 
 const List = React.createClass({
   render() {
@@ -55,7 +55,7 @@ const List = React.createClass({
               </p>
               </td>
               <td>
-              <a className="btn btn-default" href="javascript:;">编辑</a>
+              <a className="btn btn-default" href={`#/photo/category/${item.id}`}>编辑</a>
               </td>
             </tr>
           )

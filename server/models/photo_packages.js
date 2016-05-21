@@ -14,6 +14,7 @@ module.exports = function ( sequelize, DataTypes ) {
     category_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
+      defaultValue: 0,
       comment: '分类ID'
     },
     category_name: {
@@ -59,6 +60,12 @@ module.exports = function ( sequelize, DataTypes ) {
       allowNull: false,
       defaultValue: '',
       comment: '视频地址'
+    },
+    delete_status: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      defaultValue: 0,
+      comment: '删除状态'
     },
     created_at: {
       type: customDataTypes.TIMESTAMP,
