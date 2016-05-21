@@ -17,7 +17,7 @@ export default React.createClass({
   render() {
     return (
       <header className="header">
-      <Link className="logo" to="/">
+      <Link className="logo" to="/dashboard">
       <em>VJ管理后台</em>
       </Link>
       <div className="right">
