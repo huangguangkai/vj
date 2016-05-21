@@ -1,5 +1,7 @@
 'use strict';
 
+const config = require('../../config');
+
 const photoService = require('../services/photo_service');
 const photoCategoryService = require('../services/photo_category_service');
 
@@ -9,7 +11,7 @@ module.exports = function ( router ) {
   // router.get('/:id', getPhotoById);
   router.put('/:id', putPhotoById);
   router.delete('/:id', deletePhotoById);
-  // router.post('/', postPhoto);
+  router.post('/', postPhoto);
 
   router.get('/categories', categories);
 };
@@ -22,6 +24,7 @@ function* list() {
   const condition = this.request.condition;
 
   const result = yield photoService.findAndCountPhotos({
+    order: [['created_at', 'DESC']],
     offset: condition.offset,
     limit: condition.limit,
     raw: true
@@ -31,6 +34,21 @@ function* list() {
     data: result.rows,
     count: result.count
   };
+}
+
+/**
+ * 上传照片
+ */
+function* postPhoto() {
+  const photos = this.request.body.photos;
+
+  const body = photos.map(function (photo) {
+    return {
+      cover_url: `${config.qiniu.buckets.static.prefix}/${photo.key}`
+    }
+  });
+  const result = yield photoService.createPhotos(body);
+  this.body = result;
 }
 
 /**

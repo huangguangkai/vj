@@ -36,6 +36,7 @@
     "koa-redis": "^2.1.0",
     "ioredis": "^1.15.1",
     "moment": "^2.13.0",
-    "node-uuid": "^1.4.7"
+    "node-uuid": "^1.4.7",
+    "qiniu": "^6.1.11"
   }
 }

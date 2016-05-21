@@ -18,6 +18,10 @@ exports.updatePhoto = function*(body, where) {
   });
 }
 
+exports.createPhotos = function*(body) {
+  return yield models.Photo.bulkCreate(body);
+}
+
 exports.destroyPhoto = function*(id) {
   const photo = yield this.findPhotoById(id);
   return yield photo.destroy();
