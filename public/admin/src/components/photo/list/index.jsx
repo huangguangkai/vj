@@ -5,6 +5,8 @@ import {
   Navbar,
   Nav,
   NavItem,
+  NavDropdown,
+  MenuItem,
 } from 'react-bootstrap'
 
 import xhr from '../../../utils/jquery.xhr'
@@ -16,14 +18,45 @@ const DELETE_STATUS={
   DEFAULT: 0,
   DELETED: 1
 };
+const RECOMMEND_STATUS={
+  DEFAULT: 0,
+  CATEGORY: 1
+};
 
 const Bar = React.createClass({
   render() {
+    const self = this;
+    const props = self.props;
+    const categories = props.categories;
+    const query = props.getQuery();
+
+    let cname = '所有分类';
+
+    for (let i = categories.length; i--;) {
+      let category = categories[i];
+      if (query.category_id == category.id) {
+        cname = category.name;
+      }
+    }
+
     return (
       <Navbar>
         <Nav>
           <NavItem href={`#/photo/list?delete_status=${DELETE_STATUS.DEFAULT}`}>展示中</NavItem>
           <NavItem href={`#/photo/list?delete_status=${DELETE_STATUS.DELETED}`}>已隐藏</NavItem>
+          <NavDropdown title={cname} id="basic-nav-dropdown">
+            <MenuItem href={`#/photo/list?delete_status=${query.delete_status}`}>
+            所有分类</MenuItem>
+            {(() => {
+              return categories.map(function (category, i) {
+                return (
+                  <MenuItem key={`${category.id}_${i}`}
+                  href={`#/photo/list?delete_status=${query.delete_status}&category_id=${category.id}`}>
+                  {category.name}</MenuItem>
+                )
+              })
+            })()}
+          </NavDropdown>
         </Nav>
         <Navbar.Collapse>
           <Nav pullRight>
@@ -113,6 +146,11 @@ const List = React.createClass({
               </p>
 
               <p>创建时间：{moment(item.created_at).format('YYYY-MM-DD HH:mm:ss')}</p>
+              {((status) => {
+                if (status) {
+                  return <p><span className="label label-info">已推荐分类</span></p>
+                }
+              })(item.recommend_status)}
               </td>
               <td>
               {((item) => {
@@ -139,7 +177,32 @@ const List = React.createClass({
                     展示</button>
                   )
                 }
+              })(item)}
 
+              {((item) => {
+                if (item.recommend_status === RECOMMEND_STATUS.DEFAULT) {
+                  return (
+                    <button
+                    style={{
+                      marginRight: '10px'
+                    }}
+                    className="btn btn-info"
+                    data-index={i}
+                    onClick={props.handleRecommend}>
+                    分类推荐</button>
+                  )
+                } else if (item.recommend_status === RECOMMEND_STATUS.CATEGORY) {
+                  return (
+                    <button
+                    style={{
+                      marginRight: '10px'
+                    }}
+                    className="btn btn-info"
+                    data-index={i}
+                    onClick={props.handleUnrecommend}>
+                    取消分类推荐</button>
+                  )
+                }
               })(item)}
               </td>
             </tr>
@@ -158,7 +221,7 @@ export default React.createClass({
   getInitialState() {
     return {
       data: null,
-      categories: null,
+      categories: [],
       loading: false,
       empty: false,
     }
@@ -170,11 +233,13 @@ export default React.createClass({
     this.setState({empty});
   },
   getQuery(props) {
+    props = props || this.props;
     const query = props.location.query;
     return {
       page: query.page || 1,
       perpage: query.perpage || 50,
-      delete_status: query.delete_status || DELETE_STATUS.DEFAULT
+      delete_status: query.delete_status || DELETE_STATUS.DEFAULT,
+      category_id: query.category_id || 0
     }
   },
   getData(query) {
@@ -334,6 +399,40 @@ export default React.createClass({
       self.handleData(self.props);
     });
   },
+  handleRecommend(e) {
+
+    const self = this;
+    const state = self.state;
+
+    const target = e.target;
+    const index = target.dataset.index;
+    const item = state.data.data[index];
+    const id = item.id;
+
+    self.putPhotoById(id, {
+      recommend_status: RECOMMEND_STATUS.CATEGORY
+    })
+    .done(function (ret) {
+      self.handleData(self.props);
+    });
+  },
+  handleUnrecommend(e) {
+
+    const self = this;
+    const state = self.state;
+
+    const target = e.target;
+    const index = target.dataset.index;
+    const item = state.data.data[index];
+    const id = item.id;
+
+    self.putPhotoById(id, {
+      recommend_status: RECOMMEND_STATUS.DEFAULT
+    })
+    .done(function (ret) {
+      self.handleData(self.props);
+    });
+  },
   componentWillMount() {
     this.handleData(this.props);
   },
@@ -349,7 +448,11 @@ export default React.createClass({
 
     return (
       <div>
-        <Bar/>
+        <Bar
+        getQuery={self.getQuery}
+        {...props}
+        {...state}/>
+
         {(() => {
           if (!state.loading) {
             if (data.data.length > 0) {
@@ -361,6 +464,8 @@ export default React.createClass({
                 handlePackage={self.handlePackage}
                 handleHide={self.handleHide}
                 handleShow={self.handleShow}
+                handleRecommend={self.handleRecommend}
+                handleUnrecommend={self.handleUnrecommend}
                 {...props}
                 {...state}/>
 

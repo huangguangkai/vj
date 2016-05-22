@@ -68,13 +68,20 @@ function* weddingPhoto() {
       {
         model: models.Photo,
         as: 'photos',
-        order: [['created_at', 'DESC']],
-        offset: 0,
-        limit: 20
+        where: {
+          delete_status: CONSTANTS.PHOTO.DELETE_STATUS.DEFAULT,
+          recommend_status: CONSTANTS.PHOTO.RECOMMEND_STATUS.CATEGORY
+        },
+        order: [['updated_at', 'DESC']],
+        required: false,
       },
       {
         model: models.PhotoPackage,
-        as: 'packages'
+        where: {
+          delete_status: CONSTANTS.PHOTO_PACKAGE.DELETE_STATUS.DEFAULT
+        },
+        as: 'packages',
+        required: false,
       },
     ],
   });
@@ -128,7 +135,8 @@ function* weddingDress() {
 
   const result = yield photoPackageService.findPhotoPackages({
     where: {
-      category_id: WEDDING_DRESS_TRIP.id
+      category_id: WEDDING_DRESS_TRIP.id,
+      delete_status: CONSTANTS.PHOTO_PACKAGE.DELETE_STATUS.DEFAULT
     },
     order: [['created_at', 'DESC']],
     raw: true
@@ -170,8 +178,12 @@ function* getCategory() {
     include: [
       {
         model: models.PhotoPackage,
+        where: {
+          delete_status: CONSTANTS.PHOTO_PACKAGE.DELETE_STATUS.DEFAULT
+        },
         as: 'packages',
         order: [['created_at', 'DESC']],
+        required: false
       },
     ],
   });
@@ -200,21 +212,17 @@ function* getPackage() {
       {
         model: models.Photo,
         as: 'photos',
-        order: [['created_at', 'DESC']],
+        order: [['updated_at', 'DESC']],
+        where: {
+          delete_status: CONSTANTS.PHOTO.DELETE_STATUS.DEFAULT
+        },
+        required: false,
         raw: true
       },
     ],
   });
 
   const photos = result.photos;
-
-  // const photos = yield photoService.findPhotos({
-  //   where: {
-  //     package_id: pid
-  //   },
-  //   order: [['created_at', 'DESC']],
-  //   raw: true
-  // });
 
   if (result.description_url) {
     photos.unshift({
@@ -269,10 +277,12 @@ function* n(cid) {
         model: models.Photo,
         as: 'photos',
         order: [['created_at', 'DESC']],
+        required: false,
       },
       {
         model: models.PhotoPackage,
-        as: 'packages'
+        as: 'packages',
+        required: false,
       },
     ],
   });

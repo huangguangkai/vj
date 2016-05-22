@@ -61,6 +61,12 @@ module.exports = function ( sequelize, DataTypes ) {
       defaultValue: 0,
       comment: '删除状态'
     },
+    recommend_status: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      defaultValue: 0,
+      comment: '推荐状态'
+    },
     created_at: {
       type: customDataTypes.TIMESTAMP,
       defaultValue: DataTypes.NOW,

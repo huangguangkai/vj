@@ -28,13 +28,18 @@ module.exports = function ( router ) {
  * 获取照片列表
  */
 function* list() {
-  const query = this.query;
   const condition = this.request.condition;
+  const query = this.query;
+  const cid = query.category_id;
+
+  const where = {delete_status: query.delete_status};
+
+  if (cid && cid != 0) {
+    where.category_id = cid;
+  }
 
   const result = yield photoService.findAndCountPhotos({
-    where: {
-      delete_status: query.delete_status
-    },
+    where: where,
     order: [['updated_at', 'DESC']],
     offset: condition.offset,
     limit: condition.limit,
