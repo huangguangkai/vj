@@ -25,3 +25,7 @@ exports.deletePhotoPackage = function*(id) {
     id: id
   });
 }
+
+exports.createPhotoPackage = function*(body) {
+  return yield models.PhotoPackage.create(body);
+};

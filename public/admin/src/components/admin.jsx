@@ -19,8 +19,17 @@ export default React.createClass({
     })
   },
   api: {
+    getUptoken(query) {
+      return xhr.get('/qiniu/uptoken', query);
+    },
     getPhotoCategories(query) {
       return xhr.get('/photos/categories', query);
+    },
+    putPackageById(id, body) {
+      return xhr.put(`/photos/packages/${id}`, body);
+    },
+    putPhotosByPid(id, body) {
+      return xhr.put(`/photo_packages/${id}/photos`, body)
     },
   },
   componentDidMount() {

@@ -21,7 +21,7 @@ module.exports = function ( router ) {
   router.get('/packages', packages);
   router.get('/packages/:id', getPackageById);
   router.put('/packages/:id', putPackageById);
-  // router.delete('/packages/:id', deletePackageById);
+  router.post('/packages/', postPackage);
 };
 
 /**
@@ -32,6 +32,9 @@ function* list() {
   const condition = this.request.condition;
 
   const result = yield photoService.findAndCountPhotos({
+    where: {
+      delete_status: query.delete_status
+    },
     order: [['updated_at', 'DESC']],
     offset: condition.offset,
     limit: condition.limit,
@@ -170,4 +173,12 @@ function* deletePackageById() {
   const id = this.params.id;
   const result = yield photoPackageService.deletePhotoPackage(id);
   this.body = {status: 1};
+}
+
+/**
+ * 创建套餐
+ */
+function* postPackage() {
+  const body = this.request.body;
+  this.body = yield photoPackageService.createPhotoPackage(body);
 }

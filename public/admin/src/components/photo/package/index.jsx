@@ -11,9 +11,10 @@ import xhr from '../../../utils/jquery.xhr'
 import {Loading, Empty} from '../../../ui/react.loading.jsx'
 import Pagination from '../../../ui/react.pagination.jsx'
 import Cover from '../../../ui/react.cover.jsx'
+import moment from 'moment'
 
 const DELETE_STATUS={
-  NONE: 0,
+  DEFAULT: 0,
   DELETED: 1
 };
 
@@ -22,7 +23,7 @@ const Bar = React.createClass({
     return (
       <Navbar>
         <Nav>
-          <NavItem href={`#/photo/package?delete_status=${DELETE_STATUS.NONE}`}>展示中</NavItem>
+          <NavItem href={`#/photo/package?delete_status=${DELETE_STATUS.DEFAULT}`}>展示中</NavItem>
           <NavItem href={`#/photo/package?delete_status=${DELETE_STATUS.DELETED}`}>已隐藏</NavItem>
         </Nav>
         <Navbar.Collapse>
@@ -105,10 +106,11 @@ const List = React.createClass({
                 }
               })(item)}
               </p>
+              <p>创建时间：{moment(item.created_at).format('YYYY-MM-DD HH:mm:ss')}</p>
               </td>
               <td>
               {((item) => {
-                if (item.delete_status === DELETE_STATUS.NONE) {
+                if (item.delete_status === DELETE_STATUS.DEFAULT) {
                   return (
                     <button
                     style={{
@@ -170,7 +172,7 @@ export default React.createClass({
     return {
       page: query.page || 1,
       perpage: query.perpage || 20,
-      delete_status: query.delete_status || DELETE_STATUS.NONE
+      delete_status: query.delete_status || DELETE_STATUS.DEFAULT
     }
   },
   getData(query) {
@@ -259,15 +261,13 @@ export default React.createClass({
     const id = item.id;
 
     self.putPackageById(id, {
-      delete_status: DELETE_STATUS.NONE
+      delete_status: DELETE_STATUS.DEFAULT
     })
     .done(function (ret) {
       self.handleData(self.props);
     });
   },
   handleHide(e) {
-
-    if (!confirm('确认隐藏')) return;
 
     const self = this;
     const state = self.state;

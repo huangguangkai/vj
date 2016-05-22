@@ -14,6 +14,7 @@ export PhotoCategory from './photo/category/index.jsx'
 export PhotoCategoryEdit from './photo/category/edit.jsx'
 export PhotoPackage from './photo/package/index.jsx'
 export PhotoPackageEdit from './photo/package/edit.jsx'
+export PhotoPackageCreate from './photo/package/create.jsx'
 export PhotoList from './photo/list/index.jsx'
 export PhotoPost from './photo/list/post.jsx'
 

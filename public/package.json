@@ -21,7 +21,8 @@
     "react-addons-update": "15.0.2",
     "react-bootstrap": "0.29.4",
     "react-qiniu": "0.4.0",
-    "bluebird": "2.9.24"
+    "bluebird": "2.9.24",
+    "moment": "2.13.0"
   },
   "devDependencies": {
     "chalk": "^1.1.1",

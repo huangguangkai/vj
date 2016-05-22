@@ -10,11 +10,21 @@ import {
 import xhr from '../../../utils/jquery.xhr'
 import {Loading, Empty} from '../../../ui/react.loading.jsx'
 import Pagination from '../../../ui/react.pagination.jsx'
+import moment from 'moment'
+
+const DELETE_STATUS={
+  DEFAULT: 0,
+  DELETED: 1
+};
 
 const Bar = React.createClass({
   render() {
     return (
       <Navbar>
+        <Nav>
+          <NavItem href={`#/photo/list?delete_status=${DELETE_STATUS.DEFAULT}`}>展示中</NavItem>
+          <NavItem href={`#/photo/list?delete_status=${DELETE_STATUS.DELETED}`}>已隐藏</NavItem>
+        </Nav>
         <Navbar.Collapse>
           <Nav pullRight>
             <NavItem href="#/photo/list/post">新增照片</NavItem>
@@ -101,13 +111,36 @@ const List = React.createClass({
               })(item, categories)}
 
               </p>
+
+              <p>创建时间：{moment(item.created_at).format('YYYY-MM-DD HH:mm:ss')}</p>
               </td>
               <td>
-              <button
-              className="btn btn-danger"
-              data-index={i}
-              onClick={props.handleDelete}
-              >删除</button>
+              {((item) => {
+                if (item.delete_status === DELETE_STATUS.DEFAULT) {
+                  return (
+                    <button
+                    style={{
+                      marginRight: '10px'
+                    }}
+                    className="btn btn-danger"
+                    data-index={i}
+                    onClick={props.handleHide}>
+                    隐藏</button>
+                  )
+                } else if (item.delete_status === DELETE_STATUS.DELETED) {
+                  return (
+                    <button
+                    style={{
+                      marginRight: '10px'
+                    }}
+                    className="btn btn-primary"
+                    data-index={i}
+                    onClick={props.handleShow}>
+                    展示</button>
+                  )
+                }
+
+              })(item)}
               </td>
             </tr>
           )
@@ -140,7 +173,8 @@ export default React.createClass({
     const query = props.location.query;
     return {
       page: query.page || 1,
-      perpage: query.perpage || 50
+      perpage: query.perpage || 50,
+      delete_status: query.delete_status || DELETE_STATUS.DEFAULT
     }
   },
   getData(query) {
@@ -148,9 +182,6 @@ export default React.createClass({
   },
   putPhotoById(id, body) {
     return xhr.put(`/photos/${id}`, body)
-  },
-  deletePhotoById(id) {
-    return xhr.delete(`/photos/${id}`)
   },
   findPkgsByCid(cid) {
     const categories = this.state.categories;
@@ -269,9 +300,7 @@ export default React.createClass({
 
     self.setState({data});
   },
-  handleDelete(e) {
-
-    if (!confirm('确认删除')) return;
+  handleShow(e) {
 
     const self = this;
     const state = self.state;
@@ -281,11 +310,28 @@ export default React.createClass({
     const item = state.data.data[index];
     const id = item.id;
 
-    self.deletePhotoById(id)
+    self.putPhotoById(id, {
+      delete_status: DELETE_STATUS.DEFAULT
+    })
     .done(function (ret) {
-      if (ret.status) {
-        self.handleData(self.props);
-      }
+      self.handleData(self.props);
+    });
+  },
+  handleHide(e) {
+
+    const self = this;
+    const state = self.state;
+
+    const target = e.target;
+    const index = target.dataset.index;
+    const item = state.data.data[index];
+    const id = item.id;
+
+    self.putPhotoById(id, {
+      delete_status: DELETE_STATUS.DELETED
+    })
+    .done(function (ret) {
+      self.handleData(self.props);
     });
   },
   componentWillMount() {
@@ -313,7 +359,8 @@ export default React.createClass({
                 findPkgsByCid={self.findPkgsByCid}
                 handleCategory={self.handleCategory}
                 handlePackage={self.handlePackage}
-                handleDelete={self.handleDelete}
+                handleHide={self.handleHide}
+                handleShow={self.handleShow}
                 {...props}
                 {...state}/>
 

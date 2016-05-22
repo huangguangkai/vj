@@ -106,7 +106,7 @@ export default React.createClass({
           {((files) => {
 
             if (files.length === 0) {
-              return '还未上传照片'
+              return '请点击上方区域添加照片'
             }
 
             return files.map(function (file, i) {
