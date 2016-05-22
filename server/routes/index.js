@@ -231,6 +231,14 @@ function* getPackage() {
     });
   }
 
+  // if (result.description_url || result.description) {
+  //   photos.unshift({
+  //     main: true,
+  //     cover_url: result.description_url,
+  //     description: result.description
+  //   });
+  // }
+
   yield this.render('home/detail', {
     title: `${result.name || 'detail'}`,
     video: {
