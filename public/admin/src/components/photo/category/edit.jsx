@@ -84,6 +84,14 @@ export default React.createClass({
       self.setState({data});
     });
   },
+  handleNameImageClean() {
+    const data = update(this.state.data, {
+      $merge: {
+        name_image: ''
+      }
+    });
+    this.setState({data});
+  },
   handleVideo(e) {
     if (!this.state.data.video_url) {
       e.preventDefault()
@@ -174,6 +182,7 @@ export default React.createClass({
               </Qiniu>
               <Qiniu
               style={{
+                marginRight: '10px',
                 display: 'inline-block',
                 border: '2px dashed #ccc',
                 borderRadius: '5px',
@@ -186,6 +195,9 @@ export default React.createClass({
                   padding:'10px 15px'
                 }}>点击上传封面文案图</div>
               </Qiniu>
+              <button onClick={this.handleNameImageClean}
+              type="button"
+              className="btn btn-default">清除封面文案图</button>
             </div>
           </div>
 
@@ -197,12 +209,13 @@ export default React.createClass({
                 className="form-control"
                 name="video_url"
                 onChange={self.handleChange}
-                placeholder="填入视频优酷地址"/>
+                value={data.video_url}
+                placeholder="填入视频优酷地址，填入后请预览视频检查地址是否能正常访问"/>
                 <a
                 href={data.video_url}
                 target="_blank"
                 onClick={self.handleVideo}
-                className="input-group-addon">查看视频</a>
+                className="input-group-addon">预览视频</a>
               </div>
             </div>
           </div>

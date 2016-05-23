@@ -20,7 +20,6 @@ export default {
         cover_url: '',
         video_url: ''
       },
-      categories: [],
       loading: false,
       empty: false,
       isSubmit: false,
@@ -29,26 +28,6 @@ export default {
   },
   setLoading(loading) {
     this.setState({loading});
-  },
-  handleCategory(e) {
-    const target = e.target;
-    const cid = Number(target.value);
-
-    const self = this;
-    const state = self.state;
-    const selectedIndex = target.selectedIndex;
-    const cname = target[selectedIndex].innerText;
-
-    const newObj = {
-      category_id: cid,
-      category_name: cname,
-    };
-
-    const data = update(state.data, {
-      $merge: newObj
-    });
-
-    self.setState({data});
   },
   handleCoverDrop (files) {
     const self = this;
@@ -74,11 +53,19 @@ export default {
       let url = `${config.cdnPrefix}/${ret.body.key}`;
       const data = update(self.state.data, {
         $merge: {
-          name_image: url
+          title_image: url
         }
       });
       self.setState({data});
     });
+  },
+  handleNameImageClean() {
+    const data = update(this.state.data, {
+      $merge: {
+        title_image: ''
+      }
+    });
+    this.setState({data});
   },
   handleDescDrop (files) {
     const self = this;
@@ -132,8 +119,8 @@ export default {
 
     return true
   },
-  postPackage(body) {
-    return xhr.post(`/photos/packages`, body);
+  postVideo(body) {
+    return xhr.post(`/videos`, body);
   },
   render() {
     const self = this;
@@ -145,34 +132,14 @@ export default {
       return(
         <form className="form-horizontal" onSubmit={self.handleSubmit}>
           <div className="form-group">
-            <label className="col-sm-1 control-label">套餐名</label>
+            <label className="col-sm-1 control-label">标题</label>
             <div className="col-sm-3">
               <input type="text"
               className="form-control"
-              name="name"
+              name="title"
               required
-              value={data.name}
+              value={data.title}
               onChange={self.handleChange}/>
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label className="col-sm-1 control-label">所属分类</label>
-            <div className="col-sm-1">
-              <select
-              className="form-control"
-              onChange={this.handleCategory}
-              value={data.category_id}>
-                <option value="0">无分类</option>
-                {((categories) => {
-                  return categories.map(function (category, c) {
-                    return (<option
-                      key={`${category.id}_${c}`}
-                      value={category.id}>
-                      {category.name}</option>)
-                  });
-                })(state.categories)}
-              </select>
             </div>
           </div>
 
@@ -188,8 +155,8 @@ export default {
               }}
               width={640}
               height={320}
-              nameImage={data.name_image}
-              name={data.name}
+              nameImage={data.title_image}
+              name={data.title}
               coverUrl={data.cover_url}/>
 
               <Qiniu
@@ -209,6 +176,7 @@ export default {
               </Qiniu>
               <Qiniu
               style={{
+                marginRight: '10px',
                 display: 'inline-block',
                 border: '2px dashed #ccc',
                 borderRadius: '5px',
@@ -219,14 +187,17 @@ export default {
               token={state.token}>
                 <div style={{
                   padding:'10px 15px'
-                }}>点击上传封面文案图</div>
+                }}>点击上传封面标题图</div>
               </Qiniu>
+              <button onClick={this.handleNameImageClean}
+              type="button"
+              className="btn btn-default">清除封面标题图</button>
             </div>
           </div>
 
           <div className="form-group">
             <label className="col-sm-1 control-label">套餐描述</label>
-            <div className="col-sm-3">
+            <div className="col-sm-6">
               <textarea
               onChange={self.handleChange}
               className="form-control"
@@ -267,11 +238,11 @@ export default {
               token={state.token}>
                 <div style={{
                   padding:'10px 15px'
-                }}>点击上传套餐描述图</div>
+                }}>点击上传描述图</div>
               </Qiniu>
               <button onClick={this.handleDescPicClean}
               type="button"
-              className="btn btn-default">清除套餐描述图</button>
+              className="btn btn-default">清除描述图</button>
             </div>
           </div>
 
@@ -283,12 +254,14 @@ export default {
                 className="form-control"
                 name="video_url"
                 onChange={self.handleChange}
-                placeholder="填入视频优酷地址"/>
+                value={data.video_url}
+                required
+                placeholder="填入视频优酷地址，填入后请预览视频检查地址是否能正常访问"/>
                 <a
                 href={data.video_url}
                 target="_blank"
                 onClick={self.handleVideo}
-                className="input-group-addon">查看视频</a>
+                className="input-group-addon">预览视频</a>
               </div>
             </div>
           </div>

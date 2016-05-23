@@ -17,3 +17,7 @@ exports.updateVideo = function*(body, where) {
     where: where
   });
 }
+
+exports.createVideo = function*(body) {
+  return yield models.Video.create(body);
+}

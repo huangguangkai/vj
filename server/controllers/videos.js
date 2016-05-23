@@ -6,7 +6,9 @@ const videoService = require('../services/video_service');
 
 module.exports = function ( router ) {
   router.get('/', getVideos);
+  router.get('/:id', getVideoById);
   router.put('/:id', putVideoById);
+  router.post('/', postVideo);
 };
 
 /**
@@ -33,6 +35,14 @@ function* getVideos() {
 }
 
 /**
+ * 获取视频
+ */
+function* getVideoById() {
+  const id = this.params.id;
+  this.body = yield videoService.findVideoById(id);
+}
+
+/**
  * 修改视频
  */
 function* putVideoById() {
@@ -42,4 +52,12 @@ function* putVideoById() {
   this.body = yield videoService.updateVideo(body, {
     id: id
   });
+}
+
+/**
+ * 创建视频
+ */
+function* postVideo() {
+  const body = this.request.body;
+  this.body = yield videoService.createVideo(body);
 }

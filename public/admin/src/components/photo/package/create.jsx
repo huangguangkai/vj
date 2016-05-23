@@ -47,8 +47,13 @@ export default React.createClass({
       self.refs.submitBtn.innerText = '提交中...';
 
       self.postPackage(body)
-      .done(function () {
+      .done(function (ret) {
+        self.setState({isSubmit: false});
         self.refs.submitBtn.innerText = '提交成功';
+
+        props.history.push({
+          pathname: `/photo/package`,
+        });
       });
     }
   },

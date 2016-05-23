@@ -42,9 +42,7 @@ export default React.createClass({
     const self = this;
     const props = self.props;
 
-    self.setState({
-      isSubmit: true
-    });
+    self.setState({isSubmit: true});
     self.refs.submitBtn.innerText = '提交中...';
 
     const body = self.state.data;
@@ -67,9 +65,7 @@ export default React.createClass({
     ];
 
     $.when.apply(def).done(function () {
-      self.setState({
-        isSubmit: false
-      });
+      self.setState({isSubmit: false});
       self.refs.submitBtn.innerText = 'Save';
     });
   },

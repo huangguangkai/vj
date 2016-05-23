@@ -11,11 +11,12 @@ import mixins from './mixins'
 
 export default React.createClass({
   mixins: [mixins],
-  dataUrl: '/photos/packages',
+  dataUrl: '/videos',
   getData(id) {
     return xhr.get(`${this.dataUrl}/${id}`)
   },
   handleData(id) {
+    if (!id) return;
     const self = this;
     const props = self.props;
     const state = self.state;
@@ -24,14 +25,12 @@ export default React.createClass({
 
     $.when(
       props.api.getUptoken(),
-      self.getData(id),
-      props.api.getPhotoCategories())
+      self.getData(id))
     .done(function () {
       const token = arguments[0][0].uptoken;
       const data = arguments[1][0];
-      const categories = arguments[2][0];
 
-      self.setState({data, token, categories}, function () {
+      self.setState({data, token}, function () {
         self.setLoading(false);
       });
     });
@@ -41,37 +40,25 @@ export default React.createClass({
 
     const self = this;
     const props = self.props;
-
-    self.setState({
-      isSubmit: true
-    });
-    self.refs.submitBtn.innerText = '提交中...';
-
     const body = self.state.data;
 
-    const def = [
-      props.api.putPackageById(self.props.params.id, {
-        category_id: body.category_id,
-        category_name: body.category_name,
-        name: body.name,
-        name_image: body.name_image,
+    if (this.verifyFields(body)) {
+
+      self.setState({isSubmit: true});
+      self.refs.submitBtn.innerText = '提交中...';
+
+      props.api.putVideoById(self.props.params.id, {
+        title: body.title,
+        title_image: body.title_image,
         description: body.description,
         description_url: body.description_url,
         cover_url: body.cover_url,
         video_url: body.video_url
-      }),
-      props.api.putPhotosByPid(body.id, {
-        category_id: body.category_id,
-        category_name: body.category_name,
-      })
-    ];
-
-    $.when.apply(def).done(function () {
-      self.setState({
-        isSubmit: false
+      }).done(function () {
+        self.setState({isSubmit: false});
+        self.refs.submitBtn.innerText = 'Save';
       });
-      self.refs.submitBtn.innerText = 'Save';
-    });
+    }
   },
   componentWillMount() {
     this.handleData(this.props.params.id);

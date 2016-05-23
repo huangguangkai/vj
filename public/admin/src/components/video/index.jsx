@@ -188,6 +188,7 @@ export default React.createClass({
   handleShow(e) {
 
     const self = this;
+    const props = self.props;
     const state = self.state;
 
     const target = e.target;
@@ -195,7 +196,7 @@ export default React.createClass({
     const item = state.data.data[index];
     const id = item.id;
 
-    self.putVideoById(id, {
+    props.api.putVideoById(id, {
       delete_status: DELETE_STATUS.DEFAULT
     })
     .done(function (ret) {
@@ -205,6 +206,7 @@ export default React.createClass({
   handleHide(e) {
 
     const self = this;
+    const props = self.props;
     const state = self.state;
 
     const target = e.target;
@@ -212,7 +214,7 @@ export default React.createClass({
     const item = state.data.data[index];
     const id = item.id;
 
-    self.putVideoById(id, {
+    props.api.putVideoById(id, {
       delete_status: DELETE_STATUS.DELETED
     })
     .done(function (ret) {

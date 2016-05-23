@@ -31,6 +31,9 @@ export default React.createClass({
     putPhotosByPid(id, body) {
       return xhr.put(`/photo_packages/${id}/photos`, body)
     },
+    putVideoById(id, body) {
+      return xhr.put(`/videos/${id}`, body)
+    },
   },
   componentDidMount() {
     var $main = $(this.refs.main);
