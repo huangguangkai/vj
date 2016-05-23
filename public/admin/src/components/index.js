@@ -5,8 +5,12 @@ export Login from './login.jsx'
 export Admin from './admin.jsx'
 export Dashboard from './dashboard.jsx'
 
-export CooBanner from './coo/banner.jsx'
-export CooRecommend from './coo/recommend.jsx'
+export CooBanner from './coo/banner/index.jsx'
+export CooBannerCreate from './coo/banner/create.jsx'
+export CooBannerEdit from './coo/banner/edit.jsx'
+export CooRecommend from './coo/recommend/index.jsx'
+export CooRecommendCreate from './coo/recommend/create.jsx'
+export CooRecommendEdit from './coo/recommend/edit.jsx'
 
 export GroupPhotographer from './group/photographer.jsx'
 

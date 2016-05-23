@@ -17,7 +17,11 @@ export default (
 
       <Route path="/coo">
         <Route path="banner" component={components.CooBanner}></Route>
+        <Route path="banner/create" component={components.CooBannerCreate}></Route>
+        <Route path="banner/:id" component={components.CooBannerEdit}></Route>
         <Route path="recommend" component={components.CooRecommend}></Route>
+        <Route path="recommend/create" component={components.CooRecommendCreate}></Route>
+        <Route path="recommend/:id" component={components.CooRecommendEdit}></Route>
       </Route>
       <Route path="/photo">
         <Route path="category" component={components.PhotoCategory}></Route>

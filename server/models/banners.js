@@ -30,6 +30,12 @@ module.exports = function ( sequelize, DataTypes ) {
       defaultValue: '',
       comment: '封面图片地址'
     },
+    delete_status: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      defaultValue: 0,
+      comment: '删除状态'
+    },
     created_at: {
       type: customDataTypes.TIMESTAMP,
       defaultValue: DataTypes.NOW,
@@ -38,7 +44,6 @@ module.exports = function ( sequelize, DataTypes ) {
     updated_at: {
       type: customDataTypes.TIMESTAMP,
       defaultValue: DataTypes.NOW,
-      comment: '更新时间'
     }
   }, {
     tableName: 'banners',

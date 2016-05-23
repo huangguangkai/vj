@@ -2,6 +2,7 @@
 {%extends './layout/index.html'%}
 
 {%block content%}
+{%if banners.length > 0%}
 <div class="banner">
   <div class="container">
     <div id="J_Swiper" class="swiper-container">
@@ -23,6 +24,7 @@
     </div>
   </div>
 </div>
+{%endif%}
 
 {%include './components/cover.html'%}
 {%endblock%}

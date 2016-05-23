@@ -34,6 +34,9 @@ export default React.createClass({
     putVideoById(id, body) {
       return xhr.put(`/videos/${id}`, body)
     },
+    putBannerById(id, body) {
+      return xhr.put(`/banners/${id}`, body)
+    },
   },
   componentDidMount() {
     var $main = $(this.refs.main);

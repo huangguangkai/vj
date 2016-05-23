@@ -38,10 +38,18 @@ module.exports = function ( router ) {
 function* index() {
 
   const banners = yield bannerService.findBanners({
+    order: [['updated_at', 'DESC']],
+    where: {
+      delete_status: CONSTANTS.BANNER.DELETE_STATUS.DEFAULT
+    },
     raw: true
   });
 
   const recommends = yield homeRecommendService.findHomeRecommends({
+    where: {
+      delete_status: CONSTANTS.HOME_RECOMMEND.DELETE_STATUS.DEFAULT
+    },
+    order: [['updated_at', 'DESC']],
     raw: true
   });
 
