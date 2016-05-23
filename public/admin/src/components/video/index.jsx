@@ -7,10 +7,10 @@ import {
   NavItem,
 } from 'react-bootstrap'
 
-import xhr from '../../../utils/jquery.xhr'
-import {Loading, Empty} from '../../../ui/react.loading.jsx'
-import Pagination from '../../../ui/react.pagination.jsx'
-import Cover from '../../../ui/react.cover.jsx'
+import xhr from '../../utils/jquery.xhr'
+import {Loading, Empty} from '../../ui/react.loading.jsx'
+import Pagination from '../../ui/react.pagination.jsx'
+import Cover from '../../ui/react.cover.jsx'
 import moment from 'moment'
 
 const DELETE_STATUS={
@@ -23,12 +23,12 @@ const Bar = React.createClass({
     return (
       <Navbar>
         <Nav>
-          <NavItem href={`#/photo/package?delete_status=${DELETE_STATUS.DEFAULT}`}>展示中</NavItem>
-          <NavItem href={`#/photo/package?delete_status=${DELETE_STATUS.DELETED}`}>已隐藏</NavItem>
+          <NavItem href={`#/video/list?delete_status=${DELETE_STATUS.DEFAULT}`}>展示中</NavItem>
+          <NavItem href={`#/video/list?delete_status=${DELETE_STATUS.DELETED}`}>已隐藏</NavItem>
         </Nav>
         <Navbar.Collapse>
           <Nav pullRight>
-            <NavItem href="#/photo/package/create">新增套餐</NavItem>
+            <NavItem href="#/video/create">新增视频</NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -65,8 +65,8 @@ const List = React.createClass({
               {((item) => {
                 if (item.cover_url) {
                   return <Cover
-                  nameImage={item.name_image}
-                  name={item.name}
+                  nameImage={item.title_image}
+                  name={item.title}
                   coverUrl={item.cover_url}/>
                 } else {
                   return '无'
@@ -77,26 +77,8 @@ const List = React.createClass({
                 width: '50%',
                 wordBreak: 'break-all'
               }}>
-              <p>套餐名：{item.name || '无'}</p>
-              <p>套餐描述：{item.description || '无'}</p>
-              <p>
-              分类：
-              <select
-              onChange={props.handleCategory}
-              data-index={i}
-              value={item.category_id}>
-                <option value="0">无分类</option>
-                {((categories) => {
-                  return categories.map(function (category, c) {
-                    return (<option
-                      key={`${category.id}_${c}`}
-                      value={category.id}>
-                      {category.name}</option>)
-                  });
-                })(categories)}
-              </select>
-
-              </p>
+              <p>标题：{item.title || '无'}</p>
+              <p>描述：{item.description || '无'}</p>
               <p>视频：
               {((item) => {
                 if (item.video_url) {
@@ -136,7 +118,7 @@ const List = React.createClass({
 
               })(item)}
               <a
-              href={`#/photo/package/${item.id}`}
+              href={`#/video/${item.id}`}
               className="btn btn-default"
               >编辑</a>
               </td>
@@ -152,20 +134,15 @@ const List = React.createClass({
 });
 
 export default React.createClass({
-  dataUrl: '/photos/packages',
+  dataUrl: '/videos',
   getInitialState() {
     return {
       data: null,
-      categories: null,
       loading: false,
-      empty: false,
     }
   },
   setLoading(loading) {
     this.setState({loading});
-  },
-  setEmpty(empty) {
-    this.setState({empty});
   },
   getQuery(props) {
     const query = props.location.query;
@@ -178,11 +155,8 @@ export default React.createClass({
   getData(query) {
     return xhr.get(this.dataUrl, query)
   },
-  putPackageById(id, body) {
+  putVideoById(id, body) {
     return xhr.put(`${this.dataUrl}/${id}`, body)
-  },
-  putPhotosByPid(id, body) {
-    return xhr.put(`/photo_packages/${id}/photos`, body)
   },
   handleData(props) {
     const self = this;
@@ -192,14 +166,8 @@ export default React.createClass({
 
     self.setLoading(true);
 
-    $.when(
-      self.getData(query),
-      props.api.getPhotoCategories())
-    .done(function () {
-      let data = arguments[0][0];
-      let categories = arguments[1][0];
-
-      self.setState({data, categories}, function () {
+    self.getData(query).done(function (data) {
+      self.setState({data}, function () {
         self.setLoading(false);
       });
     })
@@ -217,37 +185,6 @@ export default React.createClass({
       query: query
     });
   },
-  handleCategory(e) {
-    const target = e.target;
-    const cid = Number(target.value);
-
-    const self = this;
-    const state = self.state;
-
-    const selectedIndex = target.selectedIndex;
-
-    const index = target.dataset.index;
-    const item = state.data.data[index];
-
-    const cname = target[selectedIndex].innerText;
-
-    const newObj = {
-      category_id: cid,
-      category_name: cname,
-    };
-
-    const data = update(state.data, {
-      data: {
-        [index]: {
-          $merge: newObj
-        }
-      }
-    });
-
-    self.putPackageById(item.id, newObj);
-    self.putPhotosByPid(item.id, newObj);
-    self.setState({data});
-  },
   handleShow(e) {
 
     const self = this;
@@ -258,7 +195,7 @@ export default React.createClass({
     const item = state.data.data[index];
     const id = item.id;
 
-    self.putPackageById(id, {
+    self.putVideoById(id, {
       delete_status: DELETE_STATUS.DEFAULT
     })
     .done(function (ret) {
@@ -275,7 +212,7 @@ export default React.createClass({
     const item = state.data.data[index];
     const id = item.id;
 
-    self.putPackageById(id, {
+    self.putVideoById(id, {
       delete_status: DELETE_STATUS.DELETED
     })
     .done(function (ret) {
@@ -304,7 +241,6 @@ export default React.createClass({
               return (
                 <div>
                 <List
-                handleCategory={self.handleCategory}
                 handleShow={self.handleShow}
                 handleHide={self.handleHide}
                 {...props}

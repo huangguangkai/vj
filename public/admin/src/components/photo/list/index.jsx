@@ -288,13 +288,11 @@ export default React.createClass({
     const self = this;
     const props = self.props;
     const query = self.getQuery(props);
+    query.page = page;
 
     props.history.push({
       pathname: `${props.location.pathname}`,
-      query: {
-        page: page,
-        perpage: query.perpage
-      }
+      query: query
     });
   },
   handleCategory(e) {

@@ -29,7 +29,9 @@ export default (
         <Route path="list/post" component={components.PhotoPost}></Route>
       </Route>
       <Route path="/video">
-        <Route path="wedding" component={components.VideoWedding}></Route>
+        <Route path="list" component={components.VideoIndex}></Route>
+        <Route path="create" component={components.VideoCreate}></Route>
+        <Route path=":id" component={components.VideoEdit}></Route>
       </Route>
       <Route path="/group">
         <Route path="photographer" component={components.GroupPhotographer}></Route>

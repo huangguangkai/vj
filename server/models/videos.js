@@ -48,6 +48,12 @@ module.exports = function ( sequelize, DataTypes ) {
       defaultValue: '',
       comment: '视频地址'
     },
+    delete_status: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      defaultValue: 0,
+      comment: '删除状态'
+    },
     created_at: {
       type: customDataTypes.TIMESTAMP,
       defaultValue: DataTypes.NOW,

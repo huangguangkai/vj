@@ -108,7 +108,10 @@ function* weddingPhoto() {
 
 function* weddingVideo() {
   const result = yield videoService.findVideos({
-    order: [['created_at', 'DESC']],
+    where: {
+      delete_status: CONSTANTS.VIDEO.DELETE_STATUS.DEFAULT
+    },
+    order: [['updated_at', 'DESC']],
     raw: true
   });
 
@@ -138,7 +141,7 @@ function* weddingDress() {
       category_id: WEDDING_DRESS_TRIP.id,
       delete_status: CONSTANTS.PHOTO_PACKAGE.DELETE_STATUS.DEFAULT
     },
-    order: [['created_at', 'DESC']],
+    order: [['updated_at', 'DESC']],
     raw: true
   });
 
@@ -284,7 +287,7 @@ function* n(cid) {
       {
         model: models.Photo,
         as: 'photos',
-        order: [['created_at', 'DESC']],
+        order: [['updated_at', 'DESC']],
         required: false,
       },
       {
@@ -318,7 +321,7 @@ function* n(cid) {
       where: {
         package_id: p.id
       },
-      order: [['created_at', 'DESC']],
+      order: [['updated_at', 'DESC']],
       raw: true
     });
 

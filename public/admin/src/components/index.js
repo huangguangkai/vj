@@ -18,4 +18,6 @@ export PhotoPackageCreate from './photo/package/create.jsx'
 export PhotoList from './photo/list/index.jsx'
 export PhotoPost from './photo/list/post.jsx'
 
-export VideoWedding from './video/wedding.jsx'
+export VideoIndex from './video/index.jsx'
+export VideoCreate from './video/create.jsx'
+export VideoEdit from './video/edit.jsx'

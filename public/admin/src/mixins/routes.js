@@ -22,7 +22,7 @@ export default {
       name: '视频管理',
       routeReg: /^\/video/,
       items: [
-        {route: '/video/wedding', text: '婚礼视频'},
+        {route: '/video/list', text: '婚礼视频'},
       ],
     },
     {
