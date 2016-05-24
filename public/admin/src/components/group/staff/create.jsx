@@ -44,13 +44,13 @@ export default React.createClass({
       });
       self.refs.submitBtn.innerText = '提交中...';
 
-      self.postHomeRecommend(body)
+      self.postStaff(body)
       .done(function (ret) {
         self.setState({isSubmit: false});
         self.refs.submitBtn.innerText = '提交成功';
 
         props.history.push({
-          pathname: `/coo/recommend`,
+          pathname: `/group/staff`,
         });
       });
     }

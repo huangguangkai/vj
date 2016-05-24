@@ -29,7 +29,7 @@ export default {
       name: '团队管理',
       routeReg: /^\/group/,
       items: [
-        {route: '/group/photographer', text: '摄影师'},
+        {route: '/group/staff', text: '摄影师'},
       ],
     },
   ],

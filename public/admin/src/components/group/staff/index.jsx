@@ -23,12 +23,12 @@ const Bar = React.createClass({
     return (
       <Navbar>
         <Nav>
-          <NavItem href={`#/coo/recommend?delete_status=${DELETE_STATUS.DEFAULT}`}>展示中</NavItem>
-          <NavItem href={`#/coo/recommend?delete_status=${DELETE_STATUS.DELETED}`}>已隐藏</NavItem>
+          <NavItem href={`#/group/staff?delete_status=${DELETE_STATUS.DEFAULT}`}>展示中</NavItem>
+          <NavItem href={`#/group/staff?delete_status=${DELETE_STATUS.DELETED}`}>已隐藏</NavItem>
         </Nav>
         <Navbar.Collapse>
           <Nav pullRight>
-            <NavItem href="#/coo/recommend/create">新增</NavItem>
+            <NavItem href="#/group/staff/create">新增</NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -62,24 +62,24 @@ const List = React.createClass({
               <td style={{
                 width: '320px'
               }}>
-              {((item) => {
-                if (item.cover_url) {
-                  return <Cover
-                  nameImage={item.title_image}
-                  name={item.title}
-                  coverUrl={item.cover_url}/>
-                } else {
-                  return '无'
-                }
-              })(item)}
+              <img src={`${item.cover_url}?imageView2/2/w/320`} width="320"/>
               </td>
               <td style={{
                 width: '50%',
                 wordBreak: 'break-all'
               }}>
-              <p>标题：{item.title || '无'}</p>
+              <p>名称：{item.name || '无'}</p>
               <p>权重：{item.index}</p>
-              <p>链接：<a href={item.url} target="_blank">点击访问</a></p>
+              {((url) => {
+                if (url) {
+                  return (
+                    <p>链接：
+                    <a href={url} target="_blank">点击访问</a>
+                    </p>
+                  )
+                }
+
+              })(item.url)}
               <p>创建时间：{moment(item.created_at).format('YYYY-MM-DD HH:mm:ss')}</p>
               </td>
               <td>
@@ -110,7 +110,7 @@ const List = React.createClass({
 
               })(item)}
               <a
-              href={`#/coo/recommend/${item.id}`}
+              href={`#/group/staff/${item.id}`}
               className="btn btn-default"
               >编辑</a>
               </td>
@@ -126,7 +126,7 @@ const List = React.createClass({
 });
 
 export default React.createClass({
-  dataUrl: '/recommends/home',
+  dataUrl: '/staffs',
   getInitialState() {
     return {
       data: null,
@@ -187,7 +187,7 @@ export default React.createClass({
     const item = state.data.data[index];
     const id = item.id;
 
-    props.api.putHomeRecommendById(id, {
+    props.api.putStaffById(id, {
       delete_status: DELETE_STATUS.DEFAULT
     })
     .done(function (ret) {
@@ -205,7 +205,7 @@ export default React.createClass({
     const item = state.data.data[index];
     const id = item.id;
 
-    props.api.putHomeRecommendById(id, {
+    props.api.putStaffById(id, {
       delete_status: DELETE_STATUS.DELETED
     })
     .done(function (ret) {

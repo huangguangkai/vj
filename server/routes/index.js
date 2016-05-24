@@ -49,7 +49,10 @@ function* index() {
     where: {
       delete_status: CONSTANTS.HOME_RECOMMEND.DELETE_STATUS.DEFAULT
     },
-    order: [['updated_at', 'DESC']],
+    order: [
+      ['index', 'DESC'],
+      ['updated_at', 'DESC']
+    ],
     raw: true
   });
 
@@ -365,7 +368,10 @@ function* about() {
 
   const result = yield staffService
   .findStaffs({
-    order: [['index', 'DESC']],
+    where: {
+      delete_status: CONSTANTS.STAFF.DELETE_STATUS.DEFAULT
+    },
+    order: [['index', 'DESC'], ['updated_at', 'DESC']],
     raw: true
   });
 

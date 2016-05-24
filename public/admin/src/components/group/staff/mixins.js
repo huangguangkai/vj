@@ -11,8 +11,7 @@ export default {
   getInitialState() {
     return {
       data: {
-        title: '',
-        title_image: '',
+        name: '',
         cover_url: '',
         url: '',
         index: '',
@@ -41,29 +40,6 @@ export default {
       self.setState({data});
     });
   },
-  handleNameImageDrop (files) {
-    const self = this;
-    const file = files[0];
-
-    file.uploadPromise
-    .then(function (ret) {
-      let url = `${config.cdnPrefix}/${ret.body.key}`;
-      const data = update(self.state.data, {
-        $merge: {
-          title_image: url
-        }
-      });
-      self.setState({data});
-    });
-  },
-  handleNameImageClean() {
-    const data = update(this.state.data, {
-      $merge: {
-        title_image: ''
-      }
-    });
-    this.setState({data});
-  },
   handleChange(e) {
     const self = this;
     const target = e.target;
@@ -88,8 +64,8 @@ export default {
 
     return true
   },
-  postHomeRecommend(body) {
-    return xhr.post(`/recommends/home`, body);
+  postStaff(body) {
+    return xhr.post(`/staffs`, body);
   },
   render() {
     const self = this;
@@ -101,13 +77,13 @@ export default {
       return(
         <form className="form-horizontal" onSubmit={self.handleSubmit}>
           <div className="form-group">
-            <label className="col-sm-1 control-label">标题</label>
+            <label className="col-sm-1 control-label">名称</label>
             <div className="col-sm-3">
               <input type="text"
               className="form-control"
-              name="title"
+              name="name"
               required
-              value={data.title}
+              value={data.name}
               onChange={self.handleChange}/>
             </div>
           </div>
@@ -129,18 +105,11 @@ export default {
           <div className="form-group">
             <label className="col-sm-1 control-label">封面</label>
             <div className="col-sm-5">
-
-              <Cover
-              style={{
+              <div style={{
                 marginBottom: '10px',
-                width: '640px',
-                height: '360px'
-              }}
-              width={640}
-              height={320}
-              nameImage={data.title_image}
-              name={data.title}
-              coverUrl={data.cover_url}/>
+              }}>
+                <img src={`${data.cover_url}?imageView2/2/w/640`} width="640"/>
+              </div>
 
               <Qiniu
               style={{
@@ -157,24 +126,6 @@ export default {
                   padding:'10px 15px'
                 }}>点击上传封面图</div>
               </Qiniu>
-              <Qiniu
-              style={{
-                marginRight: '10px',
-                display: 'inline-block',
-                border: '2px dashed #ccc',
-                borderRadius: '5px',
-                color: '#aaa'
-              }}
-              multiple={false}
-              onDrop={this.handleNameImageDrop}
-              token={state.token}>
-                <div style={{
-                  padding:'10px 15px'
-                }}>点击上传封面文案图</div>
-              </Qiniu>
-              <button onClick={this.handleNameImageClean}
-              type="button"
-              className="btn btn-default">清除封面文案图</button>
             </div>
           </div>
 
@@ -185,9 +136,8 @@ export default {
               className="form-control"
               name="url"
               value={data.url}
-              required
               onChange={self.handleChange}
-              placeholder="填入完整推荐链接"/>
+              placeholder="可填入个人博客相册链接"/>
             </div>
           </div>
 

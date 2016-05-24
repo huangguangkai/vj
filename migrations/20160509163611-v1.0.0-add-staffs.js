@@ -33,7 +33,7 @@ module.exports = {
       index: {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
-        defaultValue: 0,
+        defaultValue: 1,
         comment: '权重'
       },
       created_at: {

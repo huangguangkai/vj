@@ -12,7 +12,9 @@ export CooRecommend from './coo/recommend/index.jsx'
 export CooRecommendCreate from './coo/recommend/create.jsx'
 export CooRecommendEdit from './coo/recommend/edit.jsx'
 
-export GroupPhotographer from './group/photographer.jsx'
+export GroupStaff from './group/staff/index.jsx'
+export GroupStaffCreate from './group/staff/create.jsx'
+export GroupStaffEdit from './group/staff/edit.jsx'
 
 export PhotoCategory from './photo/category/index.jsx'
 export PhotoCategoryEdit from './photo/category/edit.jsx'

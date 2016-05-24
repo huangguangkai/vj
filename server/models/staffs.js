@@ -33,8 +33,14 @@ module.exports = function ( sequelize, DataTypes ) {
     index: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: 1,
       comment: '权重'
+    },
+    delete_status: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      defaultValue: 0,
+      comment: '删除状态'
     },
     created_at: {
       type: customDataTypes.TIMESTAMP,

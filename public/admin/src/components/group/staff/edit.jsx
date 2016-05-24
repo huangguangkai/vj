@@ -11,7 +11,7 @@ import mixins from './mixins'
 
 export default React.createClass({
   mixins: [mixins],
-  dataUrl: '/recommends/home',
+  dataUrl: '/staffs',
   getData(id) {
     return xhr.get(`${this.dataUrl}/${id}`)
   },
@@ -45,9 +45,8 @@ export default React.createClass({
 
     const body = self.state.data;
 
-    props.api.putHomeRecommendById(self.props.params.id, {
-      title: body.title,
-      title_image: body.title_image,
+    props.api.putStaffById(self.props.params.id, {
+      name: body.name,
       cover_url: body.cover_url,
       url: body.url,
       index: body.index

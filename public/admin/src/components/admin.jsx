@@ -37,6 +37,12 @@ export default React.createClass({
     putBannerById(id, body) {
       return xhr.put(`/banners/${id}`, body)
     },
+    putHomeRecommendById(id, body) {
+      return xhr.put(`/recommends/home/${id}`, body)
+    },
+    putStaffById(id, body) {
+      return xhr.put(`/staffs/${id}`, body)
+    },
   },
   componentDidMount() {
     var $main = $(this.refs.main);

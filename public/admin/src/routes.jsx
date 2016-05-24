@@ -38,7 +38,9 @@ export default (
         <Route path=":id" component={components.VideoEdit}></Route>
       </Route>
       <Route path="/group">
-        <Route path="photographer" component={components.GroupPhotographer}></Route>
+        <Route path="staff" component={components.GroupStaff}></Route>
+        <Route path="staff/create" component={components.GroupStaffCreate}></Route>
+        <Route path="staff/:id" component={components.GroupStaffEdit}></Route>
       </Route>
     </Route>
 
