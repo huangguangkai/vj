@@ -3,7 +3,8 @@
 <div class="video">
   <div class="container">
     <div class="hd">
-      <embed src="{{video.video_url}}" quality="high" width="1000" height="563" align="middle" allowScriptAccess="always" allowFullScreen="true" mode="transparent" type="application/x-shockwave-flash"></embed>
+      <iframe height=563 width="100%"
+      src="{{video.video_url}}" frameborder=0></iframe>
     </div>
     <div class="bd">
       {%if !!video.title%}

@@ -1,7 +1,8 @@
 
 .photos{
+  overflow: hidden;
   .bd{
-    width: 1060px;
+    width: 102%;
     .clearfix;
   }
   .photo{
@@ -49,6 +50,14 @@
       .mask{
         opacity: 0.1;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .photos{
+    .bd{
+      padding-left: 24px;
     }
   }
 }

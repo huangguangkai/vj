@@ -7,7 +7,8 @@ define([
   './components/menus',
   './components/contact',
   './components/photo',
-  ], function ($, Swiper, lazyload, menus, contact, photo) {
+  './components/scrollup',
+  ], function ($, Swiper, lazyload, menus, contact, photo, scrollUp) {
 
   var app = {
 
@@ -19,6 +20,7 @@ define([
 
     menus.init();
     contact.init();
+    scrollUp.init();
 
     if (APP.photos) {
       photo.init(APP.photos, {

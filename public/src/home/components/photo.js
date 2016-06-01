@@ -55,17 +55,18 @@ define(['jquery', 'popup'], function ($, Popup) {
       var self = this;
       var loading = APP.staticPrefix + '/img/loading.gif';
       var $content = $(this.content);
+      var query = this.getQuery();
 
       $content.html('<img class="loading" src="' + loading + '" />');
       self.dialog.reset();
 
       $('<img/>').on('load', function () {
         setTimeout(function () {
-          $content.html('<img class="pic" style="display:none;" src="' + photo + '?imageView2/2/w/800/h/600" />');
+          $content.html('<img class="pic" style="display:none;" src="' + photo + query + '" />');
           $content.find('.pic').fadeIn();
           self.dialog.reset();
         }, 100);
-      }).attr("src", (photo + '?imageView2/2/w/800/h/600'));
+      }).attr("src", (photo + query));
 
     },
     checkDisabled: function () {
@@ -106,6 +107,27 @@ define(['jquery', 'popup'], function ($, Popup) {
           this.checkDisabled();
         }
       }
+    },
+    ua: function () {
+      var ua = navigator.userAgent;
+
+      var system = {
+        ipad: ua.indexOf("iPad") > -1
+      };
+
+      return {
+        system: system
+      }
+    },
+    getQuery: function() {
+      var ua = this.ua();
+      var query = '?imageView2/2/w/800/h/600';
+
+      if (ua.system.ipad) {
+        query = '?imageView2/2/w/600/h/600';
+      }
+
+      return query;
     },
     init: function (photos, options) {
       this.photos = photos;

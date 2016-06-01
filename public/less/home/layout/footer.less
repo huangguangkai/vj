@@ -112,3 +112,37 @@
   }
 
 }
+
+.mobile-footer{
+  display: none;
+  .qr{
+    margin: 20px 0;
+    text-align: center;
+    .hd{
+      padding: 5px 0;
+      font-size: 14px;
+      color: #333;
+      .textShadow();
+    }
+  }
+
+  .content{
+    padding: 10px ;
+    background-color: #333;
+  }
+
+  .contact-li{
+    font-size: 1rem;
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+@media screen and (max-width: 435px) {
+  .footer{
+    display: none;
+  }
+  .mobile-footer{
+    display: block;
+  }
+}

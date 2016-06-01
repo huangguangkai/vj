@@ -26,4 +26,37 @@
   .swiper-pagination-bullet-active{
     background-color: #fff;
   }
+
+}
+
+@media screen and (max-width: 768px) {
+  .banner{
+    .swiper-container{
+      height: 480px;
+    }
+    .swiper-lazy{
+      background-size: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .banner{
+    margin-bottom: 10px;
+    .swiper-container{
+      height: 258.75px;
+    }
+    .swiper-pagination-bullet{
+      width: 8px;
+      height: 8px;
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .banner{
+    .swiper-container{
+      height: 200px;
+    }
+  }
 }

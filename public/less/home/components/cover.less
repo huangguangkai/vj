@@ -49,3 +49,47 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .cover{
+    a.bd{
+      height: 432px;
+    }
+    .pic,.title{
+      background-size: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 435px) {
+  .cover{
+    +.cover{
+      margin-top: 10px;
+    }
+    a.bd{
+      height: 232.875px;
+    }
+    .title{
+      .text{
+        td{
+          font-size: 30px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .cover{
+    a.bd{
+      height: 180px;
+    }
+    .title{
+      .text{
+        td{
+          font-size: 27px;
+        }
+      }
+    }
+  }
+}

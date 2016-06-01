@@ -6,7 +6,6 @@ import update from 'react-addons-update'
 import xhr from '../../../utils/jquery.xhr'
 import {Loading} from '../../../ui/react.loading.jsx'
 import Cover from '../../../ui/react.cover.jsx'
-import config from '../../../config'
 import mixins from './mixins'
 
 export default React.createClass({
