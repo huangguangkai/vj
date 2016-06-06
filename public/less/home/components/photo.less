@@ -1,6 +1,6 @@
 
 .photos{
-  overflow: hidden;
+  overflow-x: auto;
   .bd{
     width: 102%;
     .clearfix;
@@ -54,10 +54,31 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+.mobile-photos{
+  display: none;
+  .photo{
+    position: relative;
+    margin: 10px 0 0;
+    background-color: @picBgColor;
+    img{
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 1040px) {
   .photos{
     .bd{
       padding-left: 24px;
     }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .photos{
+    display: none;
+  }
+  .mobile-photos{
+    display: block;
   }
 }

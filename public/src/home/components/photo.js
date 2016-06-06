@@ -108,28 +108,20 @@ define(['jquery', 'popup'], function ($, Popup) {
         }
       }
     },
-    ua: function () {
-      var ua = navigator.userAgent;
-
-      var system = {
-        ipad: ua.indexOf("iPad") > -1
-      };
-
-      return {
-        system: system
-      }
-    },
     getQuery: function() {
-      var ua = this.ua();
-      var query = '?imageView2/2/w/800/h/600';
+      var $win = $(window);
+      var w = $win.width() - 80 || 800;
 
-      if (ua.system.ipad) {
-        query = '?imageView2/2/w/600/h/600';
+      if (w > 800) {
+        w = 800;
       }
+
+      var query = '?imageView2/2/w/' + w + '/h/600';
 
       return query;
     },
     init: function (photos, options) {
+
       this.photos = photos;
       this.options = options;
 
@@ -137,7 +129,9 @@ define(['jquery', 'popup'], function ($, Popup) {
       var $doc = $(document);
 
       $doc.on('click', self.ele, function () {
+
         var photo = self.photo = $(this).data('photo');
+
         if (photo) {
           self.initDialog();
           self.modifyDialog(photo);

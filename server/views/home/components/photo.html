@@ -36,3 +36,16 @@
   </div>
 </div>
 
+
+<div class="mobile-photos">
+  <div class="container">
+    <div class="bd">
+      {%for photo in photos%}
+      <div class="photo">
+      <img class="J_Lazy"
+      data-original="{{photo.cover_url}}?imageView2/0/w/768" alt="">
+      </div>
+      {%endfor%}
+    </div>
+  </div>
+</div>
