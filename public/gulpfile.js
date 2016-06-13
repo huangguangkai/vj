@@ -109,6 +109,7 @@ gulp.task('jsbuild', function (cb) {
       swiper: '../libs/swiper/js/swiper.jquery.umd',
       lazyload: '../libs/jquery.lazyload/jquery.lazyload-1.9.7',
       popup: '../libs/popupjs/popup',
+      cookie: '../libs/js-cookie/js.cookie',
     },
     // optimize: 'none',
     name: name,

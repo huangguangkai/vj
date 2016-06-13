@@ -41,6 +41,8 @@ app.use(bodyParser());
 app.use(conditional());
 app.use(etag());
 
+app.use(middlewares.lang());
+
 const isDev = 'production' !== app.env;
 const cdnPrefix = config.qiniu.buckets.static.prefix;
 const staticPrefix = isDev ? '' : cdnPrefix;

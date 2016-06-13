@@ -68,7 +68,8 @@ function* index() {
   yield this.render('home/index', {
     title: '首页',
     banners: banners,
-    list: list
+    list: list,
+    lang: this.lang
   });
 }
 
@@ -113,7 +114,8 @@ function* weddingPhoto() {
       video_url: result.video_url,
     },
     photos: result.photos,
-    list: list
+    list: list,
+    lang: this.lang
   });
 }
 
@@ -137,7 +139,8 @@ function* weddingVideo() {
 
   yield this.render('home/list', {
     title: '婚礼视频',
-    list: list
+    list: list,
+    lang: this.lang
   });
 }
 
@@ -181,7 +184,8 @@ function* weddingDress() {
 
   yield this.render('home/list', {
     title: '婚纱',
-    list: list
+    list: list,
+    lang: this.lang
   });
 }
 
@@ -215,6 +219,7 @@ function* getCategory() {
   yield this.render('home/list', {
     title: result.name,
     list: list,
+    lang: this.lang
   });
 }
 
@@ -258,7 +263,8 @@ function* getPackage() {
     video: {
       video_url: result.video_url,
     },
-    photos: photos
+    photos: photos,
+    lang: this.lang
   });
 }
 
@@ -272,6 +278,7 @@ function* getVideo() {
   yield this.render('home/video', {
     title: `${result.title || 'video'}`,
     video: result,
+    lang: this.lang
   });
 }
 
@@ -324,6 +331,7 @@ function* n(cid) {
     yield this.render('home/list', {
       title: result.name,
       list: list,
+      lang: this.lang
     });
   } else if (result.packages.length === 1) {
     const p = result.packages[0];
@@ -348,7 +356,8 @@ function* n(cid) {
       video: {
         video_url: p.video_url,
       },
-      photos: photos
+      photos: photos,
+      lang: this.lang
     });
 
   } else {
@@ -358,7 +367,8 @@ function* n(cid) {
       video: {
         video_url: result.video_url,
       },
-      photos: result.photos
+      photos: result.photos,
+      lang: this.lang
     });
 
   }
@@ -377,7 +387,8 @@ function* about() {
 
   yield this.render('home/about', {
     title: '关于我们',
-    list: result
+    list: result,
+    lang: this.lang
   });
 }
 

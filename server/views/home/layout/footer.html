@@ -1,9 +1,92 @@
+{%if lang=='EN'%}
+
 <div class="footer">
   <div class="copyright">COPYRIGHT &copy; 2016 VincentJam Photography & Video</div>
   <div class="contact">
     <div class="J_HasSubContact contact-li">
       <a href="javascript:;">
+        <i class="iconfont icon wechat">&#xe602;</i>
+      </a>
+      <div class="J_SubContact sub-contact wechat">
+        <div class="qr">
+          <div class="hd">Subscriptions</div>
+          <div class="bd">
+            <img src="{{staticPrefix}}/img/gzh-qr.jpg"
+            width="180" height="180" alt="">
+          </div>
+        </div><div class="qr">
+          <div class="hd">Service</div>
+          <div class="bd">
+            <img src="{{staticPrefix}}/img/kf-qr.jpg"
+            width="180" height="180" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-li">
+      <a href="http://weibo.com/3462456004/" target="_blank">
+        <i class="iconfont icon">&#xe604;</i>
+      </a>
+    </div>
+    <div class="contact-li">
+      <a href="http://i.youku.com/u/UMTg0MDAxNjM0MA==" target="_blank">
         <i class="iconfont icon">&#xe603;</i>
+      </a>
+    </div>
+    <div class="J_HasSubContact contact-li">
+      <a href="javascript:;">
+        <i class="iconfont icon phone">&#xe605;</i>
+      </a>
+      <div class="J_SubContact sub-contact phone">
+        <div class="bd">Phone：15980909119</div>
+      </div>
+    </div>
+    <div class="contact-li">
+      <a class="J_Lang" href="javascript:;">
+        <i class="iconfont icon lang">&#xe601;</i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="mobile-footer">
+  <div class="qr">
+    <div class="hd">Subscriptions</div>
+    <div class="bd">
+      <img src="{{staticPrefix}}/img/gzh-qr.jpg"
+      width="180" height="180" alt="">
+    </div>
+  </div><div class="qr">
+    <div class="hd">Service</div>
+    <div class="bd">
+      <img src="{{staticPrefix}}/img/kf-qr.jpg"
+      width="180" height="180" alt="">
+    </div>
+  </div>
+
+  <div class="content">
+    <a class="contact-li" href="http://weibo.com/3462456004/"
+    target="_blank">
+    weibo</a>
+    <a class="contact-li" href="http://i.youku.com/u/UMTg0MDAxNjM0MA=="
+    target="_blank">
+    youku</a>
+    <a class="J_Lang contact-li lang" href="javascript:;">
+    中/EN</a>
+
+    <div class="fr contact-li">Phone：15980909119</div>
+  </div>
+</div>
+
+{%else%}
+
+<div class="footer">
+  <div class="copyright">COPYRIGHT &copy; 2016 VincentJam Photography & Video</div>
+  <div class="contact">
+    <div class="J_HasSubContact contact-li">
+      <a href="javascript:;">
+        <i class="iconfont icon wechat">&#xe602;</i>
       </a>
       <div class="J_SubContact sub-contact wechat">
         <div class="qr">
@@ -24,21 +107,26 @@
 
     <div class="contact-li">
       <a href="http://weibo.com/3462456004/" target="_blank">
-        <i class="iconfont icon">&#xe605;</i>
+        <i class="iconfont icon">&#xe604;</i>
       </a>
     </div>
     <div class="contact-li">
       <a href="http://i.youku.com/u/UMTg0MDAxNjM0MA==" target="_blank">
-        <i class="iconfont icon">&#xe662;</i>
+        <i class="iconfont icon">&#xe603;</i>
       </a>
     </div>
     <div class="J_HasSubContact contact-li">
       <a href="javascript:;">
-        <i class="iconfont icon">&#xe601;</i>
+        <i class="iconfont icon phone">&#xe605;</i>
       </a>
       <div class="J_SubContact sub-contact phone">
         <div class="bd">紧急联系：15980909119</div>
       </div>
+    </div>
+    <div class="contact-li">
+      <a class="J_Lang" href="javascript:;">
+        <i class="iconfont icon lang">&#xe600;</i>
+      </a>
     </div>
   </div>
 </div>
@@ -65,7 +153,11 @@
     <a class="contact-li" href="http://i.youku.com/u/UMTg0MDAxNjM0MA=="
     target="_blank">
     优酷</a>
+    <a class="J_Lang contact-li lang" href="javascript:;">
+    中/EN</a>
 
     <div class="fr contact-li">紧急联系：15980909119</div>
   </div>
 </div>
+
+{%endif%}
