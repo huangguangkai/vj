@@ -46,6 +46,7 @@ export default React.createClass({
 
     props.api.putHomeRecommendById(self.props.params.id, {
       title: body.title,
+      title_en: body.title_en,
       title_image: body.title_image,
       cover_url: body.cover_url,
       url: body.url,

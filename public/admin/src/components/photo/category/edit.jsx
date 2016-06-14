@@ -145,7 +145,7 @@ export default React.createClass({
           <div className="form-group">
             <label className="col-sm-1 control-label">分类名</label>
             <div className="col-sm-5">
-              <p className="form-control-static">{data.name}</p>
+              <p className="form-control-static">{data.name || '无'} | {data.name_en || '无'}</p>
             </div>
           </div>
 

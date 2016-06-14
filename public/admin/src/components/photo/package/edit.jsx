@@ -52,6 +52,7 @@ export default React.createClass({
         category_id: body.category_id,
         category_name: body.category_name,
         name: body.name,
+        name_en: body.name_en,
         name_image: body.name_image,
         description: body.description,
         description_url: body.description_url,

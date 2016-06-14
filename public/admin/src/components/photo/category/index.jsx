@@ -43,7 +43,7 @@ const List = React.createClass({
               })(item)}
               </td>
               <td>
-              <p>分类名：{item.name || '无'}</p>
+              <p>分类名：{item.name || '无'} | {item.name_en || '无'}</p>
               <p>视频：
               {((item) => {
                 if (item.video_url) {

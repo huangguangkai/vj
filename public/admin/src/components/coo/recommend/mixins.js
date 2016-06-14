@@ -12,6 +12,7 @@ export default {
     return {
       data: {
         title: '',
+        title_en: '',
         title_image: '',
         cover_url: '',
         url: '',
@@ -108,6 +109,18 @@ export default {
               name="title"
               required
               value={data.title}
+              onChange={self.handleChange}/>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="col-sm-1 control-label">英文标题</label>
+            <div className="col-sm-3">
+              <input type="text"
+              className="form-control"
+              name="title_en"
+              required
+              value={data.title_en}
               onChange={self.handleChange}/>
             </div>
           </div>

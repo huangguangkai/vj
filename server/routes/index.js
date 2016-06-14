@@ -60,13 +60,15 @@ function* index() {
     return {
       name: recommend.title,
       name_image: recommend.title_image,
+      name_en: recommend.title_en,
+      name_image_en: recommend.title_image_en,
       url: recommend.url,
-      cover_url: recommend.cover_url
+      cover_url: recommend.cover_url,
     }
   });
 
   yield this.render('home/index', {
-    title: '首页',
+    title: this.lang == CONSTANTS.LANG.EN ? 'Home' : '首页',
     banners: banners,
     list: list,
     lang: this.lang
@@ -103,13 +105,15 @@ function* weddingPhoto() {
       id: p.id,
       name: p.name,
       name_image: p.name_image,
+      name_en: p.name_en,
+      name_image_en: p.name_image_en,
       url: `/p/${p.id}`,
       cover_url: p.cover_url
     }
   });
 
   yield this.render('home/wedding', {
-    title: '婚礼照片',
+    title: this.lang == CONSTANTS.LANG.EN ? 'Wedding Photos' : '婚礼照片',
     video: {
       video_url: result.video_url,
     },
@@ -133,12 +137,14 @@ function* weddingVideo() {
       url: `/v/${video.id}`,
       name_image: video.title_image,
       name: video.title,
+      name_en: video.title_en,
+      name_image_en: video.title_image_en,
       cover_url: video.cover_url
     }
   });
 
   yield this.render('home/list', {
-    title: '婚礼视频',
+    title: this.lang == CONSTANTS.LANG.EN ? 'Wedding Videos' : '婚礼视频',
     list: list,
     lang: this.lang
   });
@@ -170,6 +176,8 @@ function* weddingDress() {
       url: `/p/${p.id}`,
       name_image: p.name_image,
       name: p.name,
+      name_en: p.name_en,
+      name_image_en: p.name_image_en,
       cover_url: p.cover_url
     }
   });
@@ -179,11 +187,13 @@ function* weddingDress() {
     url: `/c/${category.id}`,
     name_image: category.name_image,
     name: category.name,
-    cover_url: category.cover_url
+    name_en: category.name_en,
+    name_image_en: category.name_image_en,
+    cover_url: category.cover_url,
   });
 
   yield this.render('home/list', {
-    title: '婚纱',
+    title: this.lang == CONSTANTS.LANG.EN ? 'Wedding Dress' : '婚纱',
     list: list,
     lang: this.lang
   });
@@ -212,12 +222,14 @@ function* getCategory() {
       url: `/p/${p.id}`,
       name_image: p.name_image,
       name: p.name,
+      name_en: p.name_en,
+      name_image_en: p.name_image_en,
       cover_url: p.cover_url
     }
   });
 
   yield this.render('home/list', {
-    title: result.name,
+    title: this.lang == CONSTANTS.LANG.EN ? result.name_en : result.name,
     list: list,
     lang: this.lang
   });
@@ -259,7 +271,7 @@ function* getPackage() {
   // }
 
   yield this.render('home/detail', {
-    title: `${result.name || 'detail'}`,
+    title: `${(this.lang == CONSTANTS.LANG.EN ? (result.name_en || result.name) : result.name) || 'detail'}`,
     video: {
       video_url: result.video_url,
     },
@@ -276,7 +288,7 @@ function* getVideo() {
   });
 
   yield this.render('home/video', {
-    title: `${result.title || 'video'}`,
+    title: `${(this.lang == CONSTANTS.LANG.EN ? (result.title_en || result.title) : result.title) || 'detail'}`,
     video: result,
     lang: this.lang
   });
@@ -324,6 +336,8 @@ function* n(cid) {
         url: `/p/${p.id}`,
         name_image: p.name_image,
         name: p.name,
+        name_en: p.name_en,
+        name_image_en: p.name_image_en,
         cover_url: p.cover_url
       }
     });
@@ -352,7 +366,7 @@ function* n(cid) {
     }
 
     yield this.render('home/detail', {
-      title: `${p.name || 'detail'}`,
+      title: `${(this.lang == CONSTANTS.LANG.EN ? (p.name_en || p.name) : p.name) || 'detail'}`,
       video: {
         video_url: p.video_url,
       },
@@ -363,7 +377,7 @@ function* n(cid) {
   } else {
 
     yield this.render('home/detail', {
-      title: `${result.name || 'detail'}`,
+      title: `${(this.lang == CONSTANTS.LANG.EN ? (result.name_en || result.name) : result.name) || 'detail'}`,
       video: {
         video_url: result.video_url,
       },
@@ -386,7 +400,7 @@ function* about() {
   });
 
   yield this.render('home/about', {
-    title: '关于我们',
+    title: this.lang == CONSTANTS.LANG.EN ? 'About Us' : '关于我们',
     list: result,
     lang: this.lang
   });

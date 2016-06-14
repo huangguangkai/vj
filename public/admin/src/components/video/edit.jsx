@@ -49,6 +49,7 @@ export default React.createClass({
 
       props.api.putVideoById(self.props.params.id, {
         title: body.title,
+        title_en: body.title_en,
         title_image: body.title_image,
         description: body.description,
         description_url: body.description_url,

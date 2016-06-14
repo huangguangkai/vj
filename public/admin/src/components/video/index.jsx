@@ -77,7 +77,7 @@ const List = React.createClass({
                 width: '50%',
                 wordBreak: 'break-all'
               }}>
-              <p>标题：{item.title || '无'}</p>
+              <p>标题：{item.title || '无'} | {item.title_en || '无'}</p>
               <p>描述：{item.description || '无'}</p>
               <p>视频：
               {((item) => {

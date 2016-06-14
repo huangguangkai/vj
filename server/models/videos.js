@@ -24,6 +24,19 @@ module.exports = function ( sequelize, DataTypes ) {
       defaultValue: '',
       comment: '标题图'
     },
+    title_en: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      defaultValue: '',
+      charset: 'utf8mb4',
+      comment: '英文标题'
+    },
+    title_image_en: {
+      type: DataTypes.STRING(500),
+      allowNull: false,
+      defaultValue: '',
+      comment: '英文标题图'
+    },
     description: {
       type: DataTypes.STRING,
       allowNull: false,

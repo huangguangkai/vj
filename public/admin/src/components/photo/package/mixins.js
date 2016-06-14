@@ -14,6 +14,7 @@ export default {
         category_id: 0,
         category_name: '',
         name: '',
+        name_en: '',
         name_image: '',
         description: '',
         description_url: '',
@@ -160,6 +161,18 @@ export default {
               name="name"
               required
               value={data.name}
+              onChange={self.handleChange}/>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="col-sm-1 control-label">套餐英文名</label>
+            <div className="col-sm-3">
+              <input type="text"
+              className="form-control"
+              name="name_en"
+              required
+              value={data.name_en}
               onChange={self.handleChange}/>
             </div>
           </div>

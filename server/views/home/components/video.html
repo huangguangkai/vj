@@ -7,8 +7,18 @@
       src="{{video.video_url}}" frameborder=0></iframe>
     </div>
     <div class="bd">
+      {%if lang==CONSTANTS.LANG.EN%}
+      {%if !!video.title_en || !!video.title%}
+      <div class="title">
+      {{video.title_en || video.title}}
+      </div>
+      {%endif%}
+      {%else%}
       {%if !!video.title%}
-      <div class="title">{{video.title}}</div>
+      <div class="title">
+      {{video.title}}
+      </div>
+      {%endif%}
       {%endif%}
 
       <div class="content">

@@ -1,20 +1,37 @@
+
 {%for item in list%}
 <div class="cover">
   <div class="container">
     <a href="{{item.url}}" class="bd">
       <div class="J_Lazy title"
-      {%if item.name_image%}
-      data-original="{{item.name_image}}?imageView2/2/w/1040/h/585"
+      {%if lang==CONSTANTS.LANG.EN%}
+        {%if item.name_image_en%}
+        data-original="{{item.name_image_en}}?imageView2/2/w/1040/h/585"
+        {%elseif item.name_image%}
+        data-original="{{item.name_image}}?imageView2/2/w/1040/h/585"
+        {%endif%}
+      {%else%}
+        {%if item.name_image%}
+        data-original="{{item.name_image}}?imageView2/2/w/1040/h/585"
+        {%endif%}
       {%endif%}>
-      {%if !item.name_image%}
+
+      {%if !item.name_image_en && !item.name_image%}
       <table class="text">
         <tbody>
           <tr>
-              <td>{{item.name}}</td>
+              <td>
+                {%if lang==CONSTANTS.LANG.EN%}
+                {{item.name_en || item.name}}
+                {%else%}
+                {{item.name}}
+                {%endif%}
+              </td>
           </tr>
         </tbody>
       </table>
       {%endif%}
+
       </div>
       <div class="mask"></div>
       <div class="J_Lazy pic"

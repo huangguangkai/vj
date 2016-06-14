@@ -59,7 +59,8 @@ app.context.render = render({
     staticPrefix: staticPrefix,
     cdnPrefix: cdnPrefix,
     jsPrefix: jsPrefix,
-    styleHelper: new StyleHelper(isDev, staticPrefix)
+    styleHelper: new StyleHelper(isDev, staticPrefix),
+    CONSTANTS: global.CONSTANTS
   },
   // writeBody: true,
   //filters: filters,

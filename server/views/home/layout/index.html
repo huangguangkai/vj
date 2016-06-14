@@ -12,7 +12,16 @@
   content="Vincent,Jam,Photography,Video,照片,视频,婚礼,婚纱,写真,个人,孕妇,儿童">
   <meta name="description"
   content="VJ国际婚礼影像 主要拍摄:婚纱/婚礼/各类写真/全球婚纱旅拍 我们追求简单真实美">
-  <title>{%block title%}{%if title%}{{title}} - {%endif%}VJ国际婚礼影像{%endblock%}</title>
+  <title>
+  {%block title%}
+  {%if title%}{{title}} - {%endif%}
+  {%if lang == CONSTANTS.LANG.EN%}
+  Vincentjam International Wedding Photography
+  {%else%}
+  VJ国际婚礼影像
+  {%endif%}
+  {%endblock%}
+  </title>
 
   <link rel="stylesheet" href="{{staticPrefix}}/libs/normalize.css/normalize-3.0.3.min.css">
   <link rel="stylesheet" href="{{staticPrefix}}/libs/swiper/css/swiper.min.css">

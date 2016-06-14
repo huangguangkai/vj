@@ -77,7 +77,7 @@ const List = React.createClass({
                 width: '50%',
                 wordBreak: 'break-all'
               }}>
-              <p>标题：{item.title || '无'}</p>
+              <p>标题：{item.title || '无'} | {item.title_en || '无'}</p>
               <p>权重：{item.index}</p>
               <p>链接：<a href={item.url} target="_blank">点击访问</a></p>
               <p>创建时间：{moment(item.created_at).format('YYYY-MM-DD HH:mm:ss')}</p>
