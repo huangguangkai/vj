@@ -17,13 +17,13 @@ module.exports = function ( router ) {
 
   router.get('/wedding-photo', weddingPhoto);
   router.get('/wedding-video', weddingVideo);
-  router.get('/wedding-dress', weddingDress);
+  router.get('/prewedding', prewedding);
 
   router.get('/c/:cid', getCategory);
   router.get('/p/:pid', getPackage);
   router.get('/v/:vid', getVideo);
 
-  router.get('/personal', personal);
+  router.get('/portrait', portrait);
   router.get('/pregnant', pregnant);
   router.get('/children', children);
 
@@ -150,19 +150,34 @@ function* weddingVideo() {
   });
 }
 
-function* weddingDress() {
+function* prewedding() {
 
   const PHOTO_CATEGORY = CONSTANTS.PHOTO_CATEGORY;
   const WEDDING_DRESS_TRIP = PHOTO_CATEGORY.WEDDING_DRESS_TRIP;
   const WEDDING_DRESS_AMOY = PHOTO_CATEGORY.WEDDING_DRESS_AMOY;
 
-  const result = yield photoPackageService.findPhotoPackages({
-    where: {
-      category_id: WEDDING_DRESS_TRIP.id,
-      delete_status: CONSTANTS.PHOTO_PACKAGE.DELETE_STATUS.DEFAULT
-    },
-    order: [['updated_at', 'DESC']],
-    raw: true
+  const result = yield photoCategoryService
+  .findPhotoCategoryById(WEDDING_DRESS_TRIP.id, {
+    include: [
+      {
+        model: models.Photo,
+        as: 'photos',
+        where: {
+          delete_status: CONSTANTS.PHOTO.DELETE_STATUS.DEFAULT,
+          recommend_status: CONSTANTS.PHOTO.RECOMMEND_STATUS.CATEGORY
+        },
+        order: [['updated_at', 'DESC']],
+        required: false,
+      },
+      {
+        model: models.PhotoPackage,
+        where: {
+          delete_status: CONSTANTS.PHOTO_PACKAGE.DELETE_STATUS.DEFAULT
+        },
+        as: 'packages',
+        required: false,
+      },
+    ],
   });
 
   const category = yield photoCategoryService
@@ -170,7 +185,7 @@ function* weddingDress() {
     raw: true
   });
 
-  const list = result.map(function (p) {
+  const list = result.packages.map(function (p) {
     return {
       id: p.id,
       url: `/p/${p.id}`,
@@ -192,8 +207,12 @@ function* weddingDress() {
     cover_url: category.cover_url,
   });
 
-  yield this.render('home/list', {
-    title: this.lang == CONSTANTS.LANG.EN ? 'Wedding Dress' : '婚纱',
+  yield this.render('home/prewedding', {
+    title: this.lang == CONSTANTS.LANG.EN ? 'Prewedding' : '婚纱',
+    video: {
+      video_url: result.video_url,
+    },
+    photos: result.photos,
     list: list,
     lang: this.lang
   });
@@ -204,6 +223,16 @@ function* getCategory() {
 
   const result = yield photoCategoryService.findPhotoCategoryById(cid, {
     include: [
+      {
+        model: models.Photo,
+        as: 'photos',
+        where: {
+          delete_status: CONSTANTS.PHOTO.DELETE_STATUS.DEFAULT,
+          recommend_status: CONSTANTS.PHOTO.RECOMMEND_STATUS.CATEGORY
+        },
+        order: [['updated_at', 'DESC']],
+        required: false,
+      },
       {
         model: models.PhotoPackage,
         where: {
@@ -230,6 +259,10 @@ function* getCategory() {
 
   yield this.render('home/list', {
     title: this.lang == CONSTANTS.LANG.EN ? result.name_en : result.name,
+    video: {
+      video_url: result.video_url,
+    },
+    photos: result.photos,
     list: list,
     lang: this.lang
   });
@@ -294,7 +327,7 @@ function* getVideo() {
   });
 }
 
-function* personal() {
+function* portrait() {
   const cid = CONSTANTS.PHOTO_CATEGORY.PERSONAL.id;
   yield n.call(this, cid);
 }

@@ -6,6 +6,17 @@
   width: 100%;
   .logo;
   .menus;
+  .container{
+    position: relative;
+  }
+  .lang{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    text-decoration: none;
+    color: #999;
+  }
 }
 
 .mobile-header{
@@ -20,7 +31,12 @@
 }
 
 @media screen and (max-width: 435px) {
-    .mobile-header{
-      display: block;
+  .header{
+    .lang{
+      display: none;
     }
   }
+  .mobile-header{
+    display: block;
+  }
+}
