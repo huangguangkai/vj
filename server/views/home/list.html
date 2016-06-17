@@ -4,11 +4,15 @@
 {%block content%}
 {%include './components/video.html'%}
 
+{%if !!video && !!video.video_url%}
 <div style="height: 50px;"></div>
+{%endif%}
 
 {%include './components/photo.html'%}
 
+{%if photos.length%}
 <div style="height: 50px;"></div>
+{%endif%}
 
 {%include './components/cover.html'%}
 
